@@ -3,6 +3,7 @@
 
 .. image:: images/logo.png
     :align: center
+
 ==================================
 
 Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors. This
