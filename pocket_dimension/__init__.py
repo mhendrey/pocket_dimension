@@ -3,7 +3,7 @@ Pocket dimension provides a memory-efficient, dense, random projection of sparse
 and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
 Frequency (TF-IDF) data.
 
-Copyright (C) 2022 Matthew Hendrey
+Copyright (C) 2022 Matthew Hendrey & Brendan Murphy
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

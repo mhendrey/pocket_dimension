@@ -3,7 +3,7 @@ Pocket Dimension provides a memory-efficient, dense, random projection of sparse
 and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
 Frequency (TFIDF) data.
 
-Copyright (C) 2022 Matthew Hendrey
+Copyright (C) 2022 Matthew Hendrey & Brendan Murphy
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -177,7 +177,8 @@ def test_distributional_johnson_lindenstrauss(
 
     This paper provides the lowest possible error probability
 
-        delta(sparse_dim, embed_dim, eps) = P[abs(|Ax|\*\*2 - |x|\*\*2) > eps * |x|\*\*2]
+    delta(sparse_dim, embed_dim, eps) =
+            P[abs(\|Ax\|\*\*2 - \|x\|\*\*2) > eps * \|x\|\*\*2]
 
     given the best possible matrix A and the worst possible data x.
 

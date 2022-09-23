@@ -3,7 +3,7 @@ Pocket Dimension provides a memory-efficient, dense, random projection of sparse
 and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
 Frequency (TFIDF) data.
 
-Copyright (C) 2022 Matthew Hendrey
+Copyright (C) 2022 Matthew Hendrey & Brendan Murphy
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ from sketchnu.countmin import load as load_cms, CountMin
 from sklearn.feature_extraction import FeatureHasher
 from typing import Dict, Iterable, List, Tuple, Union
 
-logger = logging.getLogger("planeswalker")
+logger = logging.getLogger("pocket_dimension")
 
 
 def best_delta(orig_dim: int, embed_dim: int, eps: float) -> float:
@@ -189,6 +189,60 @@ class TFVectorizer:
     Randomly project records by first applying a high-dimensional feature hasher
     to create a sparse vector representation of the term-frequency and then applying
     the random projection to a dense embedding dimension.
+
+    Parameters
+    ----------
+    d : int
+        Dimension of the dense vector output. Gets converted to multiple of 64 if
+        not already
+    cms_file : str | Path, optional
+        Filename of a saved count-min sketch to use for filtering out features
+        whose document frequency falls outside of [minDF, maxDF]. Default is None
+    hash_dim : int, optional
+        Number of dimensions that features get hashed to for the sparse vector
+        representation. Should have `hash_dim >> d`. Default is the largest
+        possible 2\*\*31 - 1 (~2 billion) for sklearn's FeatureHasher
+    minDF : int, optional
+        Minimum document frequency (number of records with this feature) a feature
+        must have to be included in the embedding. Default is 1
+    maxDF : int, optional
+        Maximum document frequency (number of records with this feature) a feature
+        can have to be included in the embedding. Default is 2\*\*32 - 1.
+    temperature : float, optional
+        Option to reshape the term frequency vector by raising each count to
+        (1/temperature). Using a value above 1.0 flattens the values relative to
+        each other. Using a value below 1.0 sharpens the contrast of values
+        relative to each other.
+    filter : pybloomfilter3, option
+        Bloom filter to use for filtering features before creating sparse vectors.
+        Default is None
+    filter_out : bool, optional
+        If True, then remove features that are in the filter before making the
+        sparse vector. If False, then only use features that are in the filter in
+        the sparse vector. Not used if `filter` is None. Default is True.
+
+    Attributes
+    ----------
+    d : int
+        Embedding dimension of the dense vector. Must be multiple of 64
+    hash_dim : int
+        Dimension of the sparse vector. Must be <= 2\*\*31-1
+    hasher : sklearn.feature_extraction.FeatureHasher
+        Hashes input features (bytes) to integer representing corresponding dimension
+    temperature : float
+        Exponential scale raw counts by 1 / temperature when making TF vector
+    cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8
+        A count-min sketch that stores document frequency info
+    minDF : int
+        Minimum document frequency a feature must have to be incuded in the vector
+    maxDF : int
+        Maximum document frequency a feature can have to be included in the vector
+    filter : pybloomfilter.BloomFilter
+        BloomFilter containing features to be filtered
+    filter_out : bool
+        If True, then any feature found in the `filter` will be excluded from the
+        vector. If False, then only features found in the `filter` are included in
+        vector.
     """
 
     def __init__(
