@@ -20,9 +20,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 __version__ = "0.1.0"
 
-from pocket_dimension.pocket_dimension import (
+
+from pocket_dimension.random_projection import (
     random_projection,
+    distributional_johnson_lindenstrauss_optimal_delta,
+    random_sparse_vectors,
+    DenseSparseRandomProjection,
+)
+from pocket_dimension.pocket_dimension import (
     TFVectorizer,
     TFIDFVectorizer,
-    best_delta,
 )

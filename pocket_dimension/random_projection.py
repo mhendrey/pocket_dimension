@@ -113,14 +113,15 @@ def distributional_johnson_lindenstrauss_optimal_delta(
 
     which can be found at http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf
 
-    If :math:`\mathbf{A}` is the random projection matrix, then :math:`\delta` is defined
-    as
+    If :math:`\mathbf{A}` is the random projection matrix, then :math:`\delta` is the
+    probability of exceeding error limits given by
+    
+    .. math::
 
-    math::
-
-        \delta = \mathbf{P}\lbrack\vert\left\|\mathbf{A}x \right \|^2_2 - \left\|x \right \|^2_2 \vert > \epsilon \left\| x \right \|^2_2 \rbrack
-
-
+        \delta = \mathbf{P} \lbrack \\vert \Vert \mathbf{A}x \Vert^2_2 -
+        \Vert x \Vert^2_2 \\vert > \epsilon \Vert x \Vert^2_2 {\\rbrack}
+    
+    
     Parameters
     ----------
     sparse_dim : int

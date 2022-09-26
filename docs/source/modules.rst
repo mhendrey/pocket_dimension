@@ -1,6 +1,14 @@
 .. toctree::
    :maxdepth: 4
 
+pocket_dimension.random_projection
+----------------------------------
+
+.. automodule:: pocket_dimension.random_projection
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pocket_dimension.pocket_dimension
 ---------------------------------
 
