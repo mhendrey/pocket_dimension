@@ -26,12 +26,16 @@ from sketchnu.countmin import CountMin
 from scipy.sparse import csr_matrix
 from typing import Tuple
 
-from pocket_dimension.pocket_dimension import (
+
+from pocket_dimension.random_projection import (
+    random_sparse_vectors,
     random_projection,
+    distributional_johnson_lindenstrauss_optimal_delta,
+)
+from pocket_dimension.pocket_dimension import (
     transform_counts_tfidf,
     TFVectorizer,
     TFIDFVectorizer,
-    best_delta,
 )
 
 
@@ -51,61 +55,6 @@ def sparse_distance_squared(S1: csr_matrix, S2: csr_matrix) -> float:
         else:
             total += value ** 2
     return total
-
-
-def get_sparse_vectors(
-    rng: np.random.Generator,
-    n: int,
-    min_n_features: int,
-    max_n_features: int,
-    normalize: bool = False,
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Randomly generate sparse vectors for testing
-
-    Parameters
-    ----------
-    rng : np.random.Generator
-        A numpy random generator. You can call np.random.default_rng() to get one
-    n : int
-        Number of sparse vectors to create
-    min_n_features : int
-        Minimum number of features any given sparse vector may have
-    max_n_features : int
-        Maximum number of features any given sparse vector may have
-    normalize : bool
-        If true, normalizes the sparse vectors to all have unit length
-    
-    Returns
-    -------
-    data : np.ndarray, dtype=np.float32
-        The values of the sparse vectors
-    indices : np.ndarray, dtype=np.int64
-        The index location that have non-zero values for the sparse vectors
-    indptr : np.ndarray, dtype=np.int64
-        The index values of the data/indices specifying boundaries between one
-        sparse vector and another.
-    """
-    n_features = rng.integers(min_n_features, max_n_features, n)
-    data = rng.uniform(1.0, 20.0, np.sum(n_features)).astype(np.float32)
-    indices = rng.integers(0, 2 ** 31 - 1, np.sum(n_features)).astype(np.int64)
-    indptr = np.concatenate((np.zeros(1), np.cumsum(n_features))).astype(np.int64)
-
-    # Maybe normalize, but make sure we don't have repeat indices in a given vector
-    for i in range(n):
-        start_idx = indptr[i]
-        end_idx = indptr[i + 1]
-        vec_indices = indices[start_idx:end_idx]
-        while len(vec_indices) != len(set(vec_indices)):
-            indices[start_idx:end_idx] = np.random.randint(
-                0, 2 ** 31 - 1, n_features[i]
-            )
-        if normalize:
-            data[start_idx:end_idx] = data[start_idx:end_idx] / np.linalg.norm(
-                data[start_idx:end_idx]
-            )
-
-    return data, indices, indptr
 
 
 def test_johnson_lindenstrauss(
@@ -143,10 +92,15 @@ def test_johnson_lindenstrauss(
     # requirement (hence the + 1)
     d = int(d // 64 + 1) * 64
 
-    rng = np.random.default_rng()
-    data, indices, indptr = get_sparse_vectors(rng, n, min_n_features, max_n_features)
-    X = random_projection(data, indices, indptr, d)
-    S = csr_matrix((data, indices, indptr))
+    S = random_sparse_vectors(
+        n, min_n_features=min_n_features, max_n_features=max_n_features
+    )
+    X = random_projection(
+        S.data.astype(np.float32),
+        S.indices.astype(np.int64),
+        S.indptr.astype(np.int64),
+        d,
+    )
 
     for i in range(0, X.shape[0] - 1):
         for j in range(i + 1, X.shape[0]):
@@ -197,14 +151,21 @@ def test_distributional_johnson_lindenstrauss(
         the probability of failure given the vagaries of running statistical tests.
         Default is 0.005
     """
-    rng = np.random.default_rng()
-    data, indices, indptr = get_sparse_vectors(
-        rng, n, min_n_features, max_n_features, normalize=False
+    S = random_sparse_vectors(
+        n, min_n_features=min_n_features, max_n_features=max_n_features
     )
+
     for d in [64, 128, 256, 512, 1024, 2048]:
-        X = random_projection(data, indices, indptr, d)
-        S = csr_matrix((data, indices, indptr))
-        delta = best_delta(2 ** 31 - 1, d, eps) + delta_pad
+        X = random_projection(
+            S.data.astype(np.float32),
+            S.indices.astype(np.int64),
+            S.indptr.astype(np.int64),
+            d,
+        )
+        delta = (
+            distributional_johnson_lindenstrauss_optimal_delta(2 ** 31 - 1, d, eps)
+            + delta_pad
+        )
         metric = np.zeros(n)
         for i in range(n):
             x2 = np.sum(np.square(X[i]))
