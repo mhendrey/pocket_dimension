@@ -24,6 +24,7 @@ from pybloomfilter import BloomFilter
 from pytest import approx
 from sketchnu.countmin import CountMin
 from scipy.sparse import csr_matrix
+from sklearn.random_projection import johnson_lindenstrauss_min_dim
 from typing import Tuple
 
 
@@ -87,7 +88,7 @@ def test_johnson_lindenstrauss(
     """
     # Johnson-Lindenstrauss Lemma says that the embedding dimension must be
     # at least bigger than this value.
-    d = (24 * np.log(n)) / (3 * eps ** 2 - 2 * eps ** 3)
+    d = johnson_lindenstrauss_min_dim(n, eps=eps)
     # random_project needs multiple of 64. So make sure we satisfy minimum
     # requirement (hence the + 1)
     d = int(d // 64 + 1) * 64
