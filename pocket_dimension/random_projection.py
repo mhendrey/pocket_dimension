@@ -375,4 +375,20 @@ class DenseSparseRandomProjection(BaseRandomProjection):
         ).astype(input_dtype)
 
     def _make_random_matrix(self, n_components, n_features):
+        """
+        This is an abstract method in the base class, so it must be overwritten, but
+        it is not need, so returning an empty numpy array.
+
+        Parameters
+        ----------
+        n_components : int
+            The embedding dimension
+        n_features : int
+            The sparse starting dimension
+        
+        Returns
+        -------
+        np.ndarray
+            Empty array to conform to BaseRandomProjection, the parent class
+        """
         return np.array([])
