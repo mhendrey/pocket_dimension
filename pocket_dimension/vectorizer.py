@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from numba import njit, prange, float32, int64, uint64
+from numba import njit, float32
 import numpy as np
 import logging
 from pathlib import Path
@@ -28,21 +28,18 @@ from sketchnu.countmin import load as load_cms, CountMin
 from sklearn.feature_extraction import FeatureHasher
 from typing import Dict, Iterable, List, Tuple, Union
 
+from .random_projection import JustInTimeRandomProjection
+
 logger = logging.getLogger("pocket_dimension")
 
 
-@njit(float32(float32, float32, float32, float32))
-def transform_counts_tfidf(c, one_over_temp, doc_freq, n_records):
+@njit(float32(float32, float32))
+def numba_idf(doc_freq, n_records):
     """
-    Numba function to calculate the tfidf value for a given feature
+    Numba function to calculate the idf value for a ``doc_freq``
 
     Parameters
     ----------
-    c : float32
-        Raw counts of the term frequency
-    one_over_temp : float32
-        Raise the raw counts, `c`, to 1.0 / temperature. I higher temperature flattens
-        the raw counts of the term frequency relative to each other.
     doc_freq : float32
         Number of records that contain this particular feature.
     n_records : float32
@@ -51,23 +48,23 @@ def transform_counts_tfidf(c, one_over_temp, doc_freq, n_records):
     Returns
     -------
     float32
-        The scaled value for the TF-IDF for this particular feature
     """
-    c = c ** one_over_temp
     idf = np.log10(max(float32(1.0), n_records / (float32(1.0) + doc_freq)))
-    return c * idf
+    return idf
 
 
 class TFVectorizer:
     """
-    Randomly project records by first applying a high-dimensional feature hasher
-    to create a sparse vector representation of the term-frequency and then applying
-    the random projection to a dense embedding dimension.
+    Calculate a Term-Frequency vector representation by first using sklearn's
+    FeatureHasher to create a high-dimensional, sparse vector representation.
+    Then apply the JustInTimeRandomProjection to return a lower-dimensional
+    dense vector representation. The resulting vectors will be normalized to unit
+    length.
 
     Parameters
     ----------
     d : int
-        Dimension of the dense vector output. Gets converted to multiple of 64 if
+        Dimension of the dense vector output. Rounded down to nearest multiple of 64 if
         not already
     cms_file : str | Path, optional
         Filename of a saved count-min sketch to use for filtering out features
@@ -103,6 +100,9 @@ class TFVectorizer:
         Dimension of the sparse vector. Must be <= 2\*\*31-1
     hasher : sklearn.feature_extraction.FeatureHasher
         Hashes input features (bytes) to integer representing corresponding dimension
+    jit_rp : JustInTimeRandomProjection
+        Efficiently projects high-dimensional sparse vectors down to lower dimensional
+        dense vectors
     temperature : float
         Exponential scale raw counts by 1 / temperature when making TF vector
     cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8
@@ -184,6 +184,7 @@ class TFVectorizer:
         self.hasher = FeatureHasher(
             hash_dim, input_type="pair", alternate_sign=True, dtype="float32"
         )
+        self.jit_rp = JustInTimeRandomProjection(n_components=self.d)
 
         if filter is None:
             self.filter = []
@@ -201,7 +202,7 @@ class TFVectorizer:
     def __call__(self, records: Iterable[Dict]) -> Tuple[np.ndarray, np.ndarray]:
         """
         Transform the records into sparse vectors with the FeatureHasher and then apply
-        the random projection.
+        the random projection. The vectors are then normalized to unit length.
 
         Parameters
         ----------
@@ -225,32 +226,41 @@ class TFVectorizer:
         ids = []
         F = self.yield_record(records, ids)
         H = self.hasher.transform(F)
-        X = random_projection(
-            H.data, H.indices.astype(np.int64), H.indptr.astype(np.int64), self.d
-        )
+        X = self.jit_rp.transform(H)
         X = X / np.linalg.norm(X, axis=1, keepdims=True)
 
         return X, np.array(ids)
 
-    def _transform_count(self, c: float, doc_freq: float) -> float:
+    def _idf(self, doc_freq: float) -> float:
         """
-        Transform an individual count by raising it to 1.0 / temperature.
+        Return the inverse document frequency given ``doc_freq``
+
+        **NOTE** For TFVectorizer, this simply returns 1.0. Included here for
+        compatability with TFIDFVectorizer
 
         Parameters
         ----------
-        c : float
-            Raw count of a given feature in a record
         doc_freq : float
-            The document frequency of this feature. This is not used for TFVectorizer
+            A document frequency
+        
+        Returns
+        -------
+        idf : float
+            The inverse document frequency
         """
-        return c ** self.one_over_temp
+        return 1.0
 
     def yield_features_counts(
         self, features: List[bytes], counts: List[int]
     ) -> Tuple[bytes, float]:
         """
-        Yield the individual feature and count where the count is transformed calling
-        `_transform_count()`
+        Yield the individual feature and count where the count is scaled by raising it
+        to :math:`1/temperature` and then multiplied by the idf value. For TFVectorizer
+        the idf = 1.0.
+
+        If ``minDF` and ``maxDF`` or a ``filter`` is provided, then the individual
+        features will be filtered appropriately. Only those that pass the filters will
+        contribute to the final vector.
 
         Parameters
         ----------
@@ -264,12 +274,15 @@ class TFVectorizer:
         ------
         Tuple[bytes, float]
         """
+        if self.temperature != 1.0:
+            counts = np.array(counts) ** self.one_over_temp
+
         for f, c in zip(features, counts):
             doc_freq = self.cms[f]
             if ((f in self.filter) != self.filter_out) and (
                 self.minDF <= doc_freq and doc_freq <= self.maxDF
             ):
-                yield (f, self._transform_count(c, doc_freq))
+                yield (f, c * self._idf(doc_freq))
 
     def yield_record(self, records: Iterable[Dict], ids: List):
         """
@@ -300,7 +313,10 @@ class TFIDFVectorizer(TFVectorizer):
     to create a sparse vector representation of the tf-idf and then applying the
     random projection to a dense embedding dimension.
 
-    tf-idf = c**(1/temp) * log10(n_records / (doc_freq + 1))
+    .. math::
+
+        tfidf = c^{1/temp} \log{10}(n\_records / (doc\_freq + 1))
+    
     """
 
     def __init__(
@@ -362,18 +378,25 @@ class TFIDFVectorizer(TFVectorizer):
             filter_out=filter_out,
         )
 
-    def _transform_count(self, c: float, doc_freq: float) -> float:
+    def _idf(self, doc_freq: float) -> float:
         """
-        Transform an individual count raising it to 1.0 / temperature and then
-        multiplying by the inverse document frequency.
+        Return the inverse document frequency given ``doc_freq``. To speed things up
+        this calls a numba function.
+
+        :math:`idf = \log_{10}(\max(1.0, N / (doc\_freq + 1.0)))`
+
+        where :math:`N` is the total number of documents (or records in this case). The
+        max is used because we are using a count-min sketch to estimate the document
+        frequencies which may result in the denominator be bigger than N.
 
         Parameters
         ----------
-        c : float
-            Raw count of a given feature in a record
         doc_freq : float
-            The document frequency of this feature. This is not used for TFVectorizer
+            A document frequency
+        
+        Returns
+        -------
+        idf : float
+            The inverse document frequency
         """
-        return transform_counts_tfidf(
-            c, self.one_over_temp, doc_freq, self.cms.n_records()
-        )
+        return numba_idf(doc_freq, self.cms.n_records())

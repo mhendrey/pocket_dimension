@@ -34,7 +34,7 @@ from pocket_dimension.random_projection import (
     distributional_johnson_lindenstrauss_optimal_delta,
 )
 from pocket_dimension.vectorizer import (
-    transform_counts_tfidf,
+    numba_idf,
     TFVectorizer,
     TFIDFVectorizer,
 )
@@ -366,20 +366,17 @@ def test_tf_temp(d: int = 64):
         cosines[2] = cosine
 
 
-def test_tfidf_transform():
+def test_numba_idf():
     """
-    Test that the numba function transform_counts_tfidf works as expected
+    Test that the numba function numba_idf works as expected
     """
-    count = 5
-    temp = 2.0
     doc_freq = 100
     n_records = 150
 
-    tfidf_py = (count ** (1 / temp)) * np.log10(n_records / (doc_freq + 1))
-    one_over_temp = 1.0 / temp
-    tfidf = transform_counts_tfidf(count, one_over_temp, doc_freq, n_records)
+    idf_py = np.log10(n_records / (doc_freq + 1))
+    idf = numba_idf(doc_freq, n_records)
 
-    assert tfidf_py == approx(tfidf)
+    assert idf_py == approx(idf)
 
 
 def test_tfidf(tmp_path, d: int = 64):
