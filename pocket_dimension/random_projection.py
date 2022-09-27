@@ -118,7 +118,7 @@ def distributional_johnson_lindenstrauss_optimal_delta(
     
     .. math::
 
-        \delta = \mathbf{P} \lbrack \\vert \Vert \mathbf{A}x \Vert^2_2 -
+        \delta = \mathbb{P} \lbrack \\vert \Vert \mathbf{A}x \Vert^2_2 -
         \Vert x \Vert^2_2 \\vert > \epsilon \Vert x \Vert^2_2 {\\rbrack}
     
     
@@ -212,30 +212,32 @@ def random_sparse_vectors(
     return csr_matrix((data, indices, indptr), shape=(n_samples, sparse_dim))
 
 
-class DenseSparseRandomProjection(BaseRandomProjection):
+class JustInTimeRandomProjection(BaseRandomProjection):
     """
     Reduce the dimensionality of sparse vectors using a dense random projection matrix
     in a memory-efficient way.
 
-    This is an alternative to scikit-learn.random_projection.SparseRandomProjection
-    that provides a higher quality embedding and is constant in the amount of RAM
-    needed, irrespective of the sparse starting dimension. It achieves this by not
-    storing the projection matrix in memory, but instead generates only the needed
-    columns on the fly for any given input vector.
+    This is an alternative to scikit-learn.random_projection.SparseRandomProjection.
+    This implementation provides higher quality embedding and is constant in the amount
+    of RAM needed, irrespective of the sparse starting dimension. It achieves this by
+    not storing the projection matrix in memory, but instead generates only the needed
+    columns just-in-time for any given input vector. This makes the same as a
+    SparseRandomProjection when the density = 1.0.
 
-    The elements of the projection matrix, :math:`\pm 1 / \sqrt{n_components}`, are
+    The elements of the projection matrix, :math:`\pm 1 / \sqrt{n\_components}`, are
     generated as needed using a hashing function to provide a random choice of the
-    sign. This uses numba functions to enable faster computation.
+    sign. This uses numba functions to enable faster computation and is parallelized
+    across the available cpus.
 
     This allows you to utilize sparse starting dimension of 2\*\*31 - 1 without any
-    issues. For really large values of ``n_components`` transforming will also be
-    faster than SparseRandomProjection.
+    issues. For really values of ``n_components`` transforming will also be faster
+    than SparseRandomProjection.
 
     Parameters
     ----------
-    n_components : int or 'auto', default='auto'
-        Dimensionality of the target projection space. This will be rounded down to
-        the nearest multiple of 64.
+    n_components : int or 'auto', default = 'auto'
+        Dimensionality of the target projection space. If not a multiple of 64, then
+        it will be rounded down to the nearest multiple of 64.
         
         If 'auto', then it will pick a dimensionality that satisfies the
         Johnson-Lindenstrauss Lemma based upon the ``eps`` parameter. The
@@ -263,7 +265,7 @@ class DenseSparseRandomProjection(BaseRandomProjection):
 
         import numpy as np
         from pocket_dimension.random_projection import (
-            DenseSparseRandomProjection,
+            JustInTimeRandomProjection,
             random_sparse_vectors,
         )
         
@@ -272,7 +274,7 @@ class DenseSparseRandomProjection(BaseRandomProjection):
         n_samples = 100_000
         X = random_sparse_vectors(n_samples, sparse_dim=sparse_dim, normalize=True)
 
-        transformer = DenseSparseRandomProjection(n_components)
+        transformer = JustInTimeRandomProjection(n_components)
         # No need to fit if provide a value for n_components at initialization
         X_new = transformer.transform(X)
         X_new.shape
@@ -317,7 +319,7 @@ class DenseSparseRandomProjection(BaseRandomProjection):
         Returns
         -------
         self : object
-            DenseSparseRandomProjection class instance
+            JustInTimeRandomProjection class instance
         """
         X = self._validate_data(X, accept_sparse="csr", dtype=[np.float32, np.float64])
         n_samples, n_features = X.shape
@@ -346,7 +348,8 @@ class DenseSparseRandomProjection(BaseRandomProjection):
 
     def transform(self, X: csr_matrix) -> np.ndarray:
         """
-        Project the data using the on the fly generated dense random projection matrix.
+        Project the data using the just-in-time generated dense random projection
+        matrix.
 
         Parameters
         ----------

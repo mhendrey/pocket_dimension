@@ -33,7 +33,7 @@ from pocket_dimension.random_projection import (
     random_projection,
     distributional_johnson_lindenstrauss_optimal_delta,
 )
-from pocket_dimension.pocket_dimension import (
+from pocket_dimension.vectorizer import (
     transform_counts_tfidf,
     TFVectorizer,
     TFIDFVectorizer,
@@ -114,7 +114,7 @@ def test_johnson_lindenstrauss(
 
 
 def test_distributional_johnson_lindenstrauss(
-    n: int = 10000,
+    n: int = 1000,
     min_n_features: int = 5,
     max_n_features: int = 100,
     eps: float = 0.1,
@@ -130,7 +130,7 @@ def test_distributional_johnson_lindenstrauss(
     Proceedings of Machine Learning Research **134**, 1 (2021)
     http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf
 
-    This paper provides the lowest possible error probability
+    This paper provides the optimal possible error probability
 
     delta(sparse_dim, embed_dim, eps) =
             P[abs(\|Ax\|\*\*2 - \|x\|\*\*2) > eps * \|x\|\*\*2]
@@ -140,7 +140,7 @@ def test_distributional_johnson_lindenstrauss(
     Parameters
     ----------
     n : int, optional
-        Number of data points. Default is 10,000
+        Number of data points. Default is 1,000
     min_n_features : int, optional
         Minimum number of features any given vector may have. Default is 5
     max_n_features : int, optional

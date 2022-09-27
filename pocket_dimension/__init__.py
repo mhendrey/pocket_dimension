@@ -25,9 +25,9 @@ from pocket_dimension.random_projection import (
     random_projection,
     distributional_johnson_lindenstrauss_optimal_delta,
     random_sparse_vectors,
-    DenseSparseRandomProjection,
+    JustInTimeRandomProjection,
 )
-from pocket_dimension.pocket_dimension import (
+from pocket_dimension.vectorizer import (
     TFVectorizer,
     TFIDFVectorizer,
 )

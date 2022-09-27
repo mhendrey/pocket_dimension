@@ -21,7 +21,7 @@ Usage
 ::
 
     import numpy as np
-    from pocket_dimension.pocket_dimension import TFVectorizer
+    from pocket_dimension.vectorizer import TFVectorizer
 
     # Make some data. "one" and "two" should be similar & "abc" should be different
     records = [

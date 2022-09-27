@@ -9,10 +9,10 @@ pocket_dimension.random_projection
    :undoc-members:
    :show-inheritance:
 
-pocket_dimension.pocket_dimension
+pocket_dimension.vectorizer
 ---------------------------------
 
-.. automodule:: pocket_dimension.pocket_dimension
+.. automodule:: pocket_dimension.vectorizer
    :members:
    :undoc-members:
    :show-inheritance:

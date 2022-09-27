@@ -1,8 +1,6 @@
 .. image:: ../../images/logo.png
     :align: center
-
-.. image:: images/logo.png
-    :align: center
+    :alt: A small spiral galaxy inside a small glass sphere
 
 ==================================
 
