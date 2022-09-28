@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pocket_dimension.vectorizer &mdash; Pocket Dimension 0.1.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pocket Dimension<img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pocket_dimension.html">Pocket Dimension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../pocket_dimension.html#the-basics">The Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pocket_dimension.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pocket_dimension.html#the-details">The Details</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pocket_dimension.random_projection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Admin</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#license-requirements">License Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#license-notices">License notices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#copyright">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../help.html">Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pocket Dimension</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pocket_dimension.vectorizer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pocket_dimension.vectorizer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors</span>
+<span class="sd">and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document</span>
+<span class="sd">Frequency (TFIDF) data.</span>
+
+<span class="sd">Copyright (C) 2022 Matthew Hendrey &amp; Brendan Murphy</span>
+
+<span class="sd">This program is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span><span class="p">,</span> <span class="n">float32</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
+<span class="kn">from</span> <span class="nn">sketchnu.countmin</span> <span class="kn">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">load_cms</span><span class="p">,</span> <span class="n">CountMin</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">FeatureHasher</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">.random_projection</span> <span class="kn">import</span> <span class="n">JustInTimeRandomProjection</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pocket_dimension&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="numba_idf"><a class="viewcode-back" href="../../modules.html#pocket_dimension.vectorizer.numba_idf">[docs]</a><span class="nd">@njit</span><span class="p">(</span><span class="n">float32</span><span class="p">(</span><span class="n">float32</span><span class="p">,</span> <span class="n">float32</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">numba_idf</span><span class="p">(</span><span class="n">doc_freq</span><span class="p">,</span> <span class="n">n_records</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Numba function to calculate the idf value for a ``doc_freq``</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    doc_freq : float32</span>
+<span class="sd">        Number of records that contain this particular feature.</span>
+<span class="sd">    n_records : float32</span>
+<span class="sd">        Total number of records in the data set.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float32</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">idf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">float32</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">n_records</span> <span class="o">/</span> <span class="p">(</span><span class="n">float32</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">doc_freq</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">idf</span></div>
+
+
+<div class="viewcode-block" id="TFVectorizer"><a class="viewcode-back" href="../../modules.html#pocket_dimension.vectorizer.TFVectorizer">[docs]</a><span class="k">class</span> <span class="nc">TFVectorizer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate a Term-Frequency vector representation by first using sklearn&#39;s</span>
+<span class="sd">    FeatureHasher to create a high-dimensional, sparse vector representation.</span>
+<span class="sd">    Then apply the JustInTimeRandomProjection to return a lower-dimensional</span>
+<span class="sd">    dense vector representation. The resulting vectors will be normalized to unit</span>
+<span class="sd">    length.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : int</span>
+<span class="sd">        Dimension of the dense vector output. Rounded down to nearest multiple of 64 if</span>
+<span class="sd">        not already</span>
+<span class="sd">    cms_file : str | Path, optional</span>
+<span class="sd">        Filename of a saved count-min sketch to use for filtering out features</span>
+<span class="sd">        whose document frequency falls outside of [minDF, maxDF]. Default is None</span>
+<span class="sd">    hash_dim : int, optional</span>
+<span class="sd">        Number of dimensions that features get hashed to for the sparse vector</span>
+<span class="sd">        representation. Should have `hash_dim &gt;&gt; d`. Default is the largest</span>
+<span class="sd">        possible 2\*\*31 - 1 (~2 billion) for sklearn&#39;s FeatureHasher</span>
+<span class="sd">    minDF : int, optional</span>
+<span class="sd">        Minimum document frequency (number of records with this feature) a feature</span>
+<span class="sd">        must have to be included in the embedding. Default is 1</span>
+<span class="sd">    maxDF : int, optional</span>
+<span class="sd">        Maximum document frequency (number of records with this feature) a feature</span>
+<span class="sd">        can have to be included in the embedding. Default is 2\*\*32 - 1.</span>
+<span class="sd">    temperature : float, optional</span>
+<span class="sd">        Option to reshape the term frequency vector by raising each count to</span>
+<span class="sd">        (1/temperature). Using a value above 1.0 flattens the values relative to</span>
+<span class="sd">        each other. Using a value below 1.0 sharpens the contrast of values</span>
+<span class="sd">        relative to each other.</span>
+<span class="sd">    filter : pybloomfilter3, option</span>
+<span class="sd">        Bloom filter to use for filtering features before creating sparse vectors.</span>
+<span class="sd">        Default is None</span>
+<span class="sd">    filter_out : bool, optional</span>
+<span class="sd">        If True, then remove features that are in the filter before making the</span>
+<span class="sd">        sparse vector. If False, then only use features that are in the filter in</span>
+<span class="sd">        the sparse vector. Not used if `filter` is None. Default is True.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : int</span>
+<span class="sd">        Embedding dimension of the dense vector. Must be multiple of 64</span>
+<span class="sd">    hash_dim : int</span>
+<span class="sd">        Dimension of the sparse vector. Must be &lt;= 2\*\*31-1</span>
+<span class="sd">    hasher : sklearn.feature_extraction.FeatureHasher</span>
+<span class="sd">        Hashes input features (bytes) to integer representing corresponding dimension</span>
+<span class="sd">    jit_rp : JustInTimeRandomProjection</span>
+<span class="sd">        Efficiently projects high-dimensional sparse vectors down to lower dimensional</span>
+<span class="sd">        dense vectors</span>
+<span class="sd">    temperature : float</span>
+<span class="sd">        Exponential scale raw counts by 1 / temperature when making TF vector</span>
+<span class="sd">    cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8</span>
+<span class="sd">        A count-min sketch that stores document frequency info</span>
+<span class="sd">    minDF : int</span>
+<span class="sd">        Minimum document frequency a feature must have to be incuded in the vector</span>
+<span class="sd">    maxDF : int</span>
+<span class="sd">        Maximum document frequency a feature can have to be included in the vector</span>
+<span class="sd">    filter : pybloomfilter.BloomFilter</span>
+<span class="sd">        BloomFilter containing features to be filtered</span>
+<span class="sd">    filter_out : bool</span>
+<span class="sd">        If True, then any feature found in the `filter` will be excluded from the</span>
+<span class="sd">        vector. If False, then only features found in the `filter` are included in</span>
+<span class="sd">        vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cms_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">hash_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">minDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">maxDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filter_out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the a Term-Frequency vectorizer. All optional parameters must be</span>
+<span class="sd">        passed as keyword arguments. That is, everything but the embedding dimension</span>
+<span class="sd">        `d`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimension of the dense vector output. Gets converted to multiple of 64 if</span>
+<span class="sd">            not already</span>
+<span class="sd">        cms_file : str | Path, optional</span>
+<span class="sd">            Filename of a saved count-min sketch to use for filtering out features</span>
+<span class="sd">            whose document frequency falls outside of [minDF, maxDF]. Default is None</span>
+<span class="sd">        hash_dim : int, optional</span>
+<span class="sd">            Number of dimensions that features get hashed to for the sparse vector</span>
+<span class="sd">            representation. Should have `hash_dim &gt;&gt; d`. Default is the largest</span>
+<span class="sd">            possible 2\*\*31 - 1 (~2 billion) for sklearn&#39;s FeatureHasher</span>
+<span class="sd">        minDF : int, optional</span>
+<span class="sd">            Minimum document frequency (number of records with this feature) a feature</span>
+<span class="sd">            must have to be included in the embedding. Default is 1</span>
+<span class="sd">        maxDF : int, optional</span>
+<span class="sd">            Maximum document frequency (number of records with this feature) a feature</span>
+<span class="sd">            can have to be included in the embedding. Default is 2\*\*32 - 1.</span>
+<span class="sd">        temperature : float, optional</span>
+<span class="sd">            Option to reshape the term frequency vector by raising each count to</span>
+<span class="sd">            (1/temperature). Using a value above 1.0 flattens the values relative to</span>
+<span class="sd">            each other. Using a value below 1.0 sharpens the contrast of values</span>
+<span class="sd">            relative to each other.</span>
+<span class="sd">        filter : pybloomfilter3, option</span>
+<span class="sd">            Bloom filter to use for filtering features before creating sparse vectors.</span>
+<span class="sd">            Default is None</span>
+<span class="sd">        filter_out : bool, optional</span>
+<span class="sd">            If True, then remove features that are in the filter before making the</span>
+<span class="sd">            sparse vector. If False, then only use features that are in the filter in</span>
+<span class="sd">            the sparse vector. Not used if `filter` is None. Default is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="o">%</span> <span class="mi">64</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span> <span class="o">//</span> <span class="mi">64</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;d is not a multiple of 64. Changing it to </span><span class="si">{d}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">hash_dim</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;{d=:} must be less than {hash_dim=:}&quot;</span>
+        <span class="k">assert</span> <span class="n">temperature</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;{temperature=:} must be positive value&quot;</span>
+        <span class="k">assert</span> <span class="n">minDF</span> <span class="o">&lt;=</span> <span class="n">maxDF</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{minDF}</span><span class="s2"> must be &lt;= </span><span class="si">{maxDF}</span><span class="s2">&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_dim</span> <span class="o">=</span> <span class="n">hash_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minDF</span> <span class="o">=</span> <span class="n">minDF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxDF</span> <span class="o">=</span> <span class="n">maxDF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_out</span> <span class="o">=</span> <span class="n">filter_out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">one_over_temp</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span> <span class="o">=</span> <span class="n">FeatureHasher</span><span class="p">(</span>
+            <span class="n">hash_dim</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="s2">&quot;pair&quot;</span><span class="p">,</span> <span class="n">alternate_sign</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jit_rp</span> <span class="o">=</span> <span class="n">JustInTimeRandomProjection</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">filter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;filter must be str | None. You gave {type(filter)}&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cms_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cms</span> <span class="o">=</span> <span class="n">CountMin</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cms_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cms</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;anything&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cms_file</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cms</span> <span class="o">=</span> <span class="n">load_cms</span><span class="p">(</span><span class="n">cms_file</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">records</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform the records into sparse vectors with the FeatureHasher and then apply</span>
+<span class="sd">        the random projection. The vectors are then normalized to unit length.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        records: Iterable[Dict]</span>
+<span class="sd">            Iterable of records where each record has</span>
+<span class="sd">            {&quot;id&quot;: str, &quot;features&quot;: List[bytes], &quot;counts&quot;: List[int]}</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X : np.ndarray, shape = [n_records, d]</span>
+<span class="sd">            Resulting dense vector representation of the records. Each vector is</span>
+<span class="sd">            normalized to unit length.</span>
+<span class="sd">        ids : np.ndarray, shape = [n_records,]</span>
+<span class="sd">            Array listing the record&#39;s id in order to track which row in X corresponds</span>
+<span class="sd">            with which id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;records, {type(records)}, must be an instance of Iterable&quot;</span>
+            <span class="p">)</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_record</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">ids</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit_rp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_idf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_freq</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the inverse document frequency given ``doc_freq``</span>
+
+<span class="sd">        **NOTE** For TFVectorizer, this simply returns 1.0. Included here for</span>
+<span class="sd">        compatability with TFIDFVectorizer</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        doc_freq : float</span>
+<span class="sd">            A document frequency</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        idf : float</span>
+<span class="sd">            The inverse document frequency</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+
+<div class="viewcode-block" id="TFVectorizer.yield_features_counts"><a class="viewcode-back" href="../../modules.html#pocket_dimension.vectorizer.TFVectorizer.yield_features_counts">[docs]</a>    <span class="k">def</span> <span class="nf">yield_features_counts</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">counts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Yield the individual feature and count where the count is scaled by raising it</span>
+<span class="sd">        to :math:`1/temperature` and then multiplied by the idf value. For TFVectorizer</span>
+<span class="sd">        the idf = 1.0.</span>
+
+<span class="sd">        If ``minDF` and ``maxDF`` or a ``filter`` is provided, then the individual</span>
+<span class="sd">        features will be filtered appropriately. Only those that pass the filters will</span>
+<span class="sd">        contribute to the final vector.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        features : List[bytes]</span>
+<span class="sd">            List of the individual features. These will be hashed by the FeatureHasher</span>
+<span class="sd">            to turn into a sparse vector representation</span>
+<span class="sd">        counts : List[int]</span>
+<span class="sd">            Number of times that feature is present in a given record.</span>
+<span class="sd">        </span>
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Tuple[bytes, float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_over_temp</span>
+
+        <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+            <span class="n">doc_freq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cms</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_out</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">minDF</span> <span class="o">&lt;=</span> <span class="n">doc_freq</span> <span class="ow">and</span> <span class="n">doc_freq</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxDF</span>
+            <span class="p">):</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idf</span><span class="p">(</span><span class="n">doc_freq</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TFVectorizer.yield_record"><a class="viewcode-back" href="../../modules.html#pocket_dimension.vectorizer.TFVectorizer.yield_record">[docs]</a>    <span class="k">def</span> <span class="nf">yield_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">records</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">ids</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Yields a generator of an individual record&#39;s features/counts.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        records : Iterable[Dict]</span>
+<span class="sd">            An iterable of records where each records is a dict of</span>
+<span class="sd">            {&quot;id&quot;: str, &quot;features&quot;: List[bytes], &quot;counts&quot;: List[int]}</span>
+<span class="sd">        ids : List</span>
+<span class="sd">            Pass in an empty list which will be returned with corresponding ids from</span>
+<span class="sd">            the `records` passed in</span>
+<span class="sd">        </span>
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Generator</span>
+<span class="sd">            Of the appropriate individual (features,counts) for a given record</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_features_counts</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">],</span> <span class="n">rec</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="TFIDFVectorizer"><a class="viewcode-back" href="../../modules.html#pocket_dimension.vectorizer.TFIDFVectorizer">[docs]</a><span class="k">class</span> <span class="nc">TFIDFVectorizer</span><span class="p">(</span><span class="n">TFVectorizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Randomly project records by first applying a high-dimensional feature hasher</span>
+<span class="sd">    to create a sparse vector representation of the tf-idf and then applying the</span>
+<span class="sd">    random projection to a dense embedding dimension.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        tfidf = c^{1/temp} \log{10}(n\_records / (doc\_freq + 1))</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cms_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">hash_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">minDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">maxDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filter_out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Term-Frequency, Inverse Document-Frequency vectorizer. All</span>
+<span class="sd">        optional parameters must be passed as keyword arguments. That is, everything</span>
+<span class="sd">        but `d` and `cms_file`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimension of the dense vector output. Gets converted to multiple of 64 if</span>
+<span class="sd">            not already</span>
+<span class="sd">        cms_file : str | Path</span>
+<span class="sd">            Filename of a saved count-min sketch to use for filtering out features</span>
+<span class="sd">            whose document frequency falls outside of [minDF, maxDF]. Default is None</span>
+<span class="sd">        hash_dim : int, optional</span>
+<span class="sd">            Number of dimensions that features get hashed to for the sparse vector</span>
+<span class="sd">            representation. Should have `hash_dim &gt;&gt; d`. Default is the largest</span>
+<span class="sd">            possible 2\*\*31 - 1 (~2 billion) for sklearn&#39;s FeatureHasher</span>
+<span class="sd">        minDF : int, optional</span>
+<span class="sd">            Minimum document frequency (number of records with this feature) a feature</span>
+<span class="sd">            must have to be included in the embedding. Default is 1</span>
+<span class="sd">        maxDF : int, optional</span>
+<span class="sd">            Maximum document frequency (number of records with this feature) a feature</span>
+<span class="sd">            can have to be included in the embedding. Default is 2\*\*32 - 1.</span>
+<span class="sd">        temperature : float, optional</span>
+<span class="sd">            Option to reshape the term frequency vector by raising each count to</span>
+<span class="sd">            (1/temperature). Using a value above 1.0 flattens the values relative to</span>
+<span class="sd">            each other. Using a value below 1.0 sharpens the contrast of values</span>
+<span class="sd">            relative to each other.</span>
+<span class="sd">        filter : pybloomfilter3, option</span>
+<span class="sd">            Bloom filter to use for filtering features before creating sparse vectors.</span>
+<span class="sd">            Default is None</span>
+<span class="sd">        filter_out : bool, optional</span>
+<span class="sd">            If True, then remove features that are in the filter before making the</span>
+<span class="sd">            sparse vector. If False, then only use features that are in the filter in</span>
+<span class="sd">            the sparse vector. Not used if `filter` is None. Default is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TFIDFVectorizer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">d</span><span class="p">,</span>
+            <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span>
+            <span class="n">hash_dim</span><span class="o">=</span><span class="n">hash_dim</span><span class="p">,</span>
+            <span class="n">minDF</span><span class="o">=</span><span class="n">minDF</span><span class="p">,</span>
+            <span class="n">maxDF</span><span class="o">=</span><span class="n">maxDF</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
+            <span class="n">filter_out</span><span class="o">=</span><span class="n">filter_out</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_idf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_freq</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the inverse document frequency given ``doc_freq``. To speed things up</span>
+<span class="sd">        this calls a numba function.</span>
+
+<span class="sd">        :math:`idf = \log_{10}(\max(1.0, N / (doc\_freq + 1.0)))`</span>
+
+<span class="sd">        where :math:`N` is the total number of documents (or records in this case). The</span>
+<span class="sd">        max is used because we are using a count-min sketch to estimate the document</span>
+<span class="sd">        frequencies which may result in the denominator be bigger than N.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        doc_freq : float</span>
+<span class="sd">            A document frequency</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        idf : float</span>
+<span class="sd">            The inverse document frequency</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">numba_idf</span><span class="p">(</span><span class="n">doc_freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cms</span><span class="o">.</span><span class="n">n_records</span><span class="p">())</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Matthew Hendrey and Brendan Murphy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
