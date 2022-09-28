@@ -1,5 +1,7 @@
 numba >= 0.55.2
 pybloomfiltermmap3
+pytest
 sphinx-rtd-theme >= 1.0.0
 scikit-learn
 scipy
+sketchnu
