@@ -27,7 +27,7 @@ jobs:
       - uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "docs/"
-          pre-build-command: "apt-get install -y --fix-missing gcc"
+          pre-build-command: "apt-get -y --allow-releaseinfo-change update && apt-get install -y gcc"
 
       # Publish built docs to gh-pages branch
       - name: Commit documentation changes
