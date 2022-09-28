@@ -27,7 +27,7 @@ jobs:
       - uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "docs/"
-          pre-build-command: "sudo apt-get install gcc"
+          pre-build-command: "apt-get install gcc"
 
       # Publish built docs to gh-pages branch
       - name: Commit documentation changes
