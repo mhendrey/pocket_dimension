@@ -20,10 +20,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: install_gcc
-        run: |
-          sudo apt-get install gcc
-
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
@@ -31,6 +27,7 @@ jobs:
       - uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "docs/"
+          pre-build-command: "apt-get update -y && apt-get install -y gcc"
 
       # Publish built docs to gh-pages branch
       - name: Commit documentation changes
