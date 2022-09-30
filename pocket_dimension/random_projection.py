@@ -148,7 +148,12 @@ def distributional_johnson_lindenstrauss_optimal_delta(
     out = minimize(fun, x0=z0, jac=jac, method="Newton-CG")
     scale, delta = out.x, 1.0 + out.fun
 
-    return delta
+    # If you do sparse_dim = 2**31 - 1 this returns a numpy array for some reason
+    # If you do sparse_dim <= 2**30 it gives you a float
+    if isinstance(delta, np.ndarray):
+        return delta[0]
+    else:
+        return delta
 
 
 def random_sparse_vectors(

@@ -227,9 +227,15 @@ class TFVectorizer:
         F = self.yield_record(records, ids)
         H = self.hasher.transform(F)
         X = self.jit_rp.transform(H)
-        X = X / np.linalg.norm(X, axis=1, keepdims=True)
 
-        return X, np.array(ids)
+        norms = np.linalg.norm(X, axis=1, keepdims=True)
+        keep_nonzero = (norms > 0.0).reshape(-1)
+        # Remove records that are all zeros (they had no features after filtering)
+        X = X[keep_nonzero, :] / norms[keep_nonzero, :]
+        ids = np.array(ids)[keep_nonzero]
+        # X = X / np.linalg.norm(X, axis=1, keepdims=True)
+
+        return X, ids
 
     def _idf(self, doc_freq: float) -> float:
         """

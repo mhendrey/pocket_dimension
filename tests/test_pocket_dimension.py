@@ -266,6 +266,18 @@ def test_tf_filter(tmp_path, d: int = 64):
     X, _ = embedder(records)
     assert X[0].dot(X[1]) == approx(1.0)
 
+    """
+    Test that vectors that have all features removed by the filter are not returned
+    """
+    bloom_filter = BloomFilter.open(bloom_file, "rw")
+    bloom_filter.add(b"a")
+    # Now only b"f" is not in the filter
+    bloom_filter.close()
+    embedder = TFVectorizer(d, filter=bloom_file, filter_out=True)
+    X, ids = embedder(records)
+    assert X.shape[0] == 1, "Only the id='two' should be in the results"
+    assert ids[0] == "two", "Only the id='two' should be in the results"
+
 
 def test_tf_cms(tmp_path, d: int = 64):
     """
