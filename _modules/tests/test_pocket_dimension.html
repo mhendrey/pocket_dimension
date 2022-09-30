@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tests.test_pocket_dimension &mdash; Pocket Dimension 0.1.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>tests.test_pocket_dimension &mdash; Pocket Dimension 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -27,7 +27,7 @@
             <a href="../../index.html" class="icon icon-home"> Pocket Dimension<img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -353,7 +353,19 @@
     <span class="p">]</span>
     <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">bloom_file</span><span class="p">,</span> <span class="n">filter_out</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span></div>
+    <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that vectors that have all features removed by the filter are not returned</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bloom_filter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">bloom_file</span><span class="p">,</span> <span class="s2">&quot;rw&quot;</span><span class="p">)</span>
+    <span class="n">bloom_filter</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="c1"># Now only b&quot;f&quot; is not in the filter</span>
+    <span class="n">bloom_filter</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">bloom_file</span><span class="p">,</span> <span class="n">filter_out</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Only the id=&#39;two&#39; should be in the results&quot;</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;Only the id=&#39;two&#39; should be in the results&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_tf_cms"><a class="viewcode-back" href="../../modules.html#tests.test_pocket_dimension.test_tf_cms">[docs]</a><span class="k">def</span> <span class="nf">test_tf_cms</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
