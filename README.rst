@@ -18,6 +18,8 @@ found at https://mhendrey.github.io/pocket_dimension
 
 Installation
 ============
-Pocket Dimension may be installed using conda::
+Pocket Dimension may be install using pip::
 
-    conda install -c conda-forge pocket_dimension
+    pip install pocket_dimension
+
+I'm working on a conda-forge version, but this uses pybloomfiltermmap3 which is currently only on PyPi.
