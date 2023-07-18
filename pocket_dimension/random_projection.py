@@ -1,3 +1,24 @@
+"""
+Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors
+and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
+Frequency (TFIDF) data.
+
+Copyright (C) 2022 Matthew Hendrey & Brendan Murphy
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from numba import njit, prange, float32, int64, uint64
 import numpy as np
 from sklearn.random_projection import (
@@ -62,7 +83,7 @@ def random_projection(
         If you have just a single record, then indtpr=[0, len(data)]
     d : int
         Embedding dimension of dense vectors.
-    
+
     Returns
     -------
     X : np.ndarray, shape=(n_rows, d), dtype=float32
@@ -115,13 +136,13 @@ def distributional_johnson_lindenstrauss_optimal_delta(
 
     If :math:`\mathbf{A}` is the random projection matrix, then :math:`\delta` is the
     probability of exceeding error limits given by
-    
+
     .. math::
 
         \delta = \mathbb{P} \lbrack \\vert \Vert \mathbf{A}x \Vert^2_2 -
         \Vert x \Vert^2_2 \\vert > \epsilon \Vert x \Vert^2_2 {\\rbrack}
-    
-    
+
+
     Parameters
     ----------
     sparse_dim : int
@@ -130,7 +151,7 @@ def distributional_johnson_lindenstrauss_optimal_delta(
         Embedding dimension
     eps : float
         Error rate
-    
+
     Returns
     -------
     delta : float
@@ -159,7 +180,7 @@ def distributional_johnson_lindenstrauss_optimal_delta(
 def random_sparse_vectors(
     n_samples: int,
     *,
-    sparse_dim: int = 2 ** 31 - 1,
+    sparse_dim: int = 2**31 - 1,
     min_n_features: int = 20,
     max_n_features: int = 100,
     normalize: bool = False,
@@ -191,7 +212,7 @@ def random_sparse_vectors(
     if rng is None:
         rng = np.random.default_rng()
 
-    if sparse_dim >= 2 ** 31:
+    if sparse_dim >= 2**31:
         raise ValueError(
             f"{sparse_dim=:,} must be below 2**31 due to csr_matrix limits"
         )
@@ -243,12 +264,12 @@ class JustInTimeRandomProjection(BaseRandomProjection):
     n_components : int or 'auto', default = 'auto'
         Dimensionality of the target projection space. If not a multiple of 64, then
         it will be rounded down to the nearest multiple of 64.
-        
+
         If 'auto', then it will pick a dimensionality that satisfies the
         Johnson-Lindenstrauss Lemma based upon the ``eps`` parameter. The
         dimensionality will then be rounded up to the nearest multiple of 64
         to ensure you satisfy the conditions in the lemma.
-        
+
         **NOTE** This can yield a very conservative estimate of the required
         dimensionality.
     eps : float, default = 0.1
@@ -257,12 +278,12 @@ class JustInTimeRandomProjection(BaseRandomProjection):
         This represents the error rate between distances in the sparse dimension
         and the resulting lower embedding dimension. Smaller values of ``eps``
         give larger values of ``n_components``.
-    
+
     Attributes
     ----------
     n_components_ : int
         Dimensionality of the embedding dimension. It will be a multiple of 64.
-    
+
     Examples
     --------
 
@@ -273,7 +294,7 @@ class JustInTimeRandomProjection(BaseRandomProjection):
             JustInTimeRandomProjection,
             random_sparse_vectors,
         )
-        
+
         n_components = 256
         sparse_dim = 1_073_741_824
         n_samples = 100_000
@@ -361,7 +382,7 @@ class JustInTimeRandomProjection(BaseRandomProjection):
         X : csr_matrix
             The input data to project into a smaller dimensional space. Shape is
             (n_samples, sparse_dim)
-        
+
         Returns
         -------
         np.ndarray
@@ -394,7 +415,7 @@ class JustInTimeRandomProjection(BaseRandomProjection):
             The embedding dimension
         n_features : int
             The sparse starting dimension
-        
+
         Returns
         -------
         np.ndarray
