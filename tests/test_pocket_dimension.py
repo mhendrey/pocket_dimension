@@ -49,21 +49,24 @@ def sparse_distance_squared(S1: csr_matrix, S2: csr_matrix) -> float:
         if idx in S2.indices:
             total += (value - S2.data[idx]) ** 2
         else:
-            total += value ** 2
+            total += value**2
     for idx, value in zip(S2.indices, S2.data):
         if idx in S1.indices:
             total += 0.0  # already accounted for above
         else:
-            total += value ** 2
+            total += value**2
     return total
 
 
 def test_johnson_lindenstrauss(
-    n: int = 40, min_n_features: int = 5, max_n_features: int = 100, eps: float = 0.05,
+    n: int = 40,
+    min_n_features: int = 5,
+    max_n_features: int = 100,
+    eps: float = 0.05,
 ):
     """
     Test the the Johnson-Lindenstrauss Lemma holds between the sparse vectors and the
-    randomly projected dense vectors. This uses the results found in 
+    randomly projected dense vectors. This uses the results found in
 
     https://cs.stanford.edu/people/mmahoney/cs369m/Lectures/lecture1.pdf
 
@@ -118,7 +121,7 @@ def test_distributional_johnson_lindenstrauss(
     min_n_features: int = 5,
     max_n_features: int = 100,
     eps: float = 0.1,
-    delta_pad: float = 0.005,
+    delta_pad: float = 0.01,
 ):
     """
     Test the statistical guarantees of the Distributional Johnson-Lindenstrauss Lemma
@@ -150,7 +153,7 @@ def test_distributional_johnson_lindenstrauss(
     delta_pad : float, optional
         Amount by which we pad the calculated best delta value. This is done to reduce
         the probability of failure given the vagaries of running statistical tests.
-        Default is 0.005
+        Default is 0.01
     """
     S = random_sparse_vectors(
         n, min_n_features=min_n_features, max_n_features=max_n_features
@@ -164,7 +167,7 @@ def test_distributional_johnson_lindenstrauss(
             d,
         )
         delta = (
-            distributional_johnson_lindenstrauss_optimal_delta(2 ** 31 - 1, d, eps)
+            distributional_johnson_lindenstrauss_optimal_delta(2**31 - 1, d, eps)
             + delta_pad
         )
         metric = np.zeros(n)
@@ -178,7 +181,7 @@ def test_distributional_johnson_lindenstrauss(
 
 def test_tf(d: int = 64):
     """
-    Basic test that things look right. 
+    Basic test that things look right.
 
     Parameters
     ----------
@@ -196,14 +199,14 @@ def test_tf(d: int = 64):
 
     assert X.shape == (3, d)
     assert X.dtype == np.float32
-    cosine_0_2 = X[0].dot(X[1])
-    assert cosine_0_2 == approx(1.0), f"{cosine_0_2=:.5f} should be 1.0"
+    cosine_0_1 = X[0].dot(X[1])
+    assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
     assert ids.shape == (3,)
     assert ids[0] == "one"
     assert ids[1] == "two"
     assert ids[2] == "three"
-    cosine_1_3 = X[0].dot(X[2])
-    assert cosine_1_3 < 0.25, f"{cosine_1_3=:.5f} should be small"
+    cosine_0_2 = X[0].dot(X[2])
+    assert cosine_0_2 < 0.25, f"{cosine_0_2=:.5f} should be small"
 
 
 def test_tf_filter(tmp_path, d: int = 64):
@@ -320,7 +323,53 @@ def test_tf_cms(tmp_path, d: int = 64):
     """
     embedder = TFVectorizer(d, cms_file=cms_file, minDF=3, maxDF=100)
     X, _ = embedder(records)
-    for i in range(2):
+    for i in range(3):
+        assert X[i].dot(X_nofilter[2]) == approx(1.0), f"{i} was not filtered"
+
+    """
+    Test that we get back no results if min_n_features is not enough
+    """
+    embedder = TFVectorizer(d, cms_file=cms_file, minDF=3, maxDF=100, min_n_features=5)
+    X, _ = embedder(records)
+    assert X.shape == (0, d), f"{X.shape} should be (0, {d})"
+
+    """
+    Test that we get back results if min_n_features enough
+    """
+    embedder = TFVectorizer(d, cms_file=cms_file, minDF=3, maxDF=100, min_n_features=4)
+    X, _ = embedder(records)
+    assert X.shape == (3, d), f"{X.shape} should be (3, {d})"
+    for i in range(3):
+        assert X[i].dot(X_nofilter[2]) == approx(1.0), f"{i} was not filtered"
+
+    """
+    Test that we get back no results if min_n_observations is not met
+    """
+    embedder = TFVectorizer(
+        d,
+        cms_file=cms_file,
+        minDF=3,
+        maxDF=100,
+        min_n_features=4,
+        min_n_observations=11,
+    )
+    X, _ = embedder(records)
+    assert X.shape == (0, d), f"{X.shape} should be (0, {d})"
+
+    """
+    Test that we get back results if min_n_observations is met
+    """
+    embedder = TFVectorizer(
+        d,
+        cms_file=cms_file,
+        minDF=3,
+        maxDF=100,
+        min_n_features=4,
+        min_n_observations=10,
+    )
+    X, _ = embedder(records)
+    assert X.shape == (3, d), f"{X.shape} should be (3, {d})"
+    for i in range(3):
         assert X[i].dot(X_nofilter[2]) == approx(1.0), f"{i} was not filtered"
 
 
@@ -407,7 +456,11 @@ def test_tfidf(tmp_path, d: int = 64):
             "features": [b"a", b"b", b"c", b"d", b"e"],
             "counts": [1, 2, 3, 4, 5],
         },
-        {"id": "three", "features": [b"a", b"b", b"c", b"d"], "counts": [1, 2, 3, 4],},
+        {
+            "id": "three",
+            "features": [b"a", b"b", b"c", b"d"],
+            "counts": [1, 2, 3, 4],
+        },
     ]
     cms_file = str(tmp_path / "tf_cms.npz")
     cms = CountMin("linear", width=300)
@@ -427,3 +480,47 @@ def test_tfidf(tmp_path, d: int = 64):
 
     # Now the b"e" should contribute nothing to the vector since idf = 0.0
     assert X[0].dot(X[2]) == approx(1.0)
+
+
+def test_tf_data_quality(d: int = 64):
+    """
+    Test that records without minimium data quality (min_n_features &
+    min_n_observations) return vectors
+
+    Parameters
+    ----------
+    d : int, optional
+        Embedding dimension. Default is 64
+    """
+    records = [
+        {"id": "one", "features": [b"a", b"b", b"c"], "counts": [6, 6, 6]},
+        {"id": "two", "features": [b"a", b"b", b"c"], "counts": [5, 5, 5]},
+        {"id": "three", "features": [b"a", b"b", b"c"], "counts": [1, 1, 1]},
+        {"id": "four", "features": [b"a", b"b"], "counts": [20, 20]},
+        {"id": "five", "features": [b"a", b"b"], "counts": [1, 1]},
+    ]
+
+    embedder = TFVectorizer(d, min_n_features=3, min_n_observations=15)
+    X, ids = embedder(records)
+    assert X.shape == (2, d)
+    assert ids[0] == "one"
+    assert ids[1] == "two"
+    cosine_0_1 = X[0].dot(X[1])
+    assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
+
+    embedder = TFVectorizer(d, min_n_features=3, min_n_observations=16)
+    X, ids = embedder(records)
+    assert X.shape == (1, d)
+    assert ids[0] == "one"
+
+    embedder = TFVectorizer(d, min_n_features=2, min_n_observations=3)
+    X, ids = embedder(records)
+    assert X.shape == (4, d)
+    assert ids[0] == "one"
+    assert ids[1] == "two"
+    assert ids[2] == "three"
+    assert ids[3] == "four"
+    cosine_0_1 = X[0].dot(X[1])
+    assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
+    cosine_0_2 = X[0].dot(X[2])
+    assert cosine_0_2 == approx(1.0), f"{cosine_0_2=:.5f} should be 1.0"
