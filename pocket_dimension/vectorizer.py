@@ -44,7 +44,7 @@ def numba_idf(doc_freq, n_records):
         Number of records that contain this particular feature.
     n_records : float32
         Total number of records in the data set.
-    
+
     Returns
     -------
     float32
@@ -124,10 +124,12 @@ class TFVectorizer:
         d: int,
         *,
         cms_file: Union[str, Path] = None,
-        hash_dim: int = 2 ** 31 - 1,
+        hash_dim: int = 2**31 - 1,
         minDF: int = 1,
-        maxDF: int = 2 ** 32 - 1,
+        maxDF: int = 2**32 - 1,
         temperature: float = 1.0,
+        min_n_features: int = 1,
+        min_n_observations: int = 1,
         filter: str = None,
         filter_out: bool = True,
     ):
@@ -159,6 +161,13 @@ class TFVectorizer:
             (1/temperature). Using a value above 1.0 flattens the values relative to
             each other. Using a value below 1.0 sharpens the contrast of values
             relative to each other.
+        min_n_features : int, optional
+            Must have at least this many features in order to create a vector. Useful
+            as a data quality check. Default is 1
+        min_n_observations : int, optional
+            Must have at least his many observations in order to create a vector.
+            Useful as a data quality check. This is the sum of counts over the
+            different features for a given item. Default is 1
         filter : pybloomfilter3, option
             Bloom filter to use for filtering features before creating sparse vectors.
             Default is None
@@ -171,7 +180,11 @@ class TFVectorizer:
             d = 64 * max(1, int(d // 64))
             logger.warning(f"d is not a multiple of 64. Changing it to {d}")
         assert d < hash_dim, f"{d=:} must be less than {hash_dim=:}"
-        assert temperature > 0.0, f"{temperature=:} must be positive value"
+        assert temperature > 0.0, f"{temperature=:} must be non-negative value"
+        assert min_n_features > 0, f"{min_n_features=:} must be positive integer"
+        assert (
+            min_n_observations > 0
+        ), f"{min_n_observations=:} must be positive integer"
         assert minDF <= maxDF, f"{minDF} must be <= {maxDF}"
 
         self.d = d
@@ -179,6 +192,8 @@ class TFVectorizer:
         self.minDF = minDF
         self.maxDF = maxDF
         self.temperature = temperature
+        self.min_n_features = min_n_features
+        self.min_n_observations = min_n_observations
         self.filter_out = filter_out
         self.one_over_temp = 1.0 / temperature
         self.hasher = FeatureHasher(
@@ -209,7 +224,7 @@ class TFVectorizer:
         records: Iterable[Dict]
             Iterable of records where each record has
             {"id": str, "features": List[bytes], "counts": List[int]}
-        
+
         Returns
         -------
         X : np.ndarray, shape = [n_records, d]
@@ -248,7 +263,7 @@ class TFVectorizer:
         ----------
         doc_freq : float
             A document frequency
-        
+
         Returns
         -------
         idf : float
@@ -256,17 +271,22 @@ class TFVectorizer:
         """
         return 1.0
 
-    def yield_features_counts(
+    def filter_reweight_features(
         self, features: List[bytes], counts: List[int]
-    ) -> Tuple[bytes, float]:
+    ) -> List[Tuple[bytes, float]]:
         """
-        Yield the individual feature and count where the count is scaled by raising it
-        to :math:`1/temperature` and then multiplied by the idf value. For TFVectorizer
-        the idf = 1.0.
+        Filter the features accordingly and reweight the associated counts. The counts
+        are scaled by raising them to :math:`1/temperature` and then multiplied by the
+        ``idf`` value. For TFVectorizer :math:`idf=1.0`.
 
-        If ``minDF` and ``maxDF`` or a ``filter`` is provided, then the individual
-        features will be filtered appropriately. Only those that pass the filters will
-        contribute to the final vector.
+        Features will be filtered out if their document frequency is not within
+        [``minDF``, ``maxDF``] and if a ``filter`` is provided during initialization.
+        Only those features that pass the filters will contribute to the final vector.
+
+        After filtering, a final check is done to ensure that there are at least
+        ``min_n_features`` features remaining and that there are at least
+        ``min_n_observations`` observations of those features. Otherwise an empty list
+        is returned.
 
         Parameters
         ----------
@@ -275,24 +295,39 @@ class TFVectorizer:
             to turn into a sparse vector representation
         counts : List[int]
             Number of times that feature is present in a given record.
-        
-        Yields
-        ------
-        Tuple[bytes, float]
-        """
-        if self.temperature != 1.0:
-            counts = np.array(counts) ** self.one_over_temp
 
-        for f, c in zip(features, counts):
+        Returns
+        ------
+        List[Tuple[bytes, float]]
+        """
+        values = np.array(counts) ** self.one_over_temp
+
+        features_values = []
+        n_features = 0
+        n_observations = 0
+        for i in range(len(features)):
+            f = features[i]
+            v = values[i]
             doc_freq = self.cms[f]
             if ((f in self.filter) != self.filter_out) and (
                 self.minDF <= doc_freq and doc_freq <= self.maxDF
             ):
-                yield (f, c * self._idf(doc_freq))
+                features_values.append((f, v * self._idf(doc_freq)))
+                n_features += 1
+                n_observations += counts[i]
+
+        if (
+            n_features >= self.min_n_features
+            and n_observations >= self.min_n_observations
+        ):
+            return features_values
+        else:
+            return []
 
     def yield_record(self, records: Iterable[Dict], ids: List):
         """
-        Yields a generator of an individual record's features/counts.
+        Yields a list of an individual record's (features, values) where the values are
+        the counts after reweighting them by ``temperature`` and/or ``idf``.
 
         Parameters
         ----------
@@ -302,15 +337,15 @@ class TFVectorizer:
         ids : List
             Pass in an empty list which will be returned with corresponding ids from
             the `records` passed in
-        
+
         Yields
         ------
-        Generator
-            Of the appropriate individual (features,counts) for a given record
+        List[Tuple[bytes, float]]
+            Of the appropriate individual (feature, value) for a given record
         """
         for rec in records:
             ids.append(rec["id"])
-            yield self.yield_features_counts(rec["features"], rec["counts"])
+            yield self.filter_reweight_features(rec["features"], rec["counts"])
 
 
 class TFIDFVectorizer(TFVectorizer):
@@ -322,7 +357,7 @@ class TFIDFVectorizer(TFVectorizer):
     .. math::
 
         tfidf = c^{1/temp} \log{10}(n\_records / (doc\_freq + 1))
-    
+
     """
 
     def __init__(
@@ -330,9 +365,9 @@ class TFIDFVectorizer(TFVectorizer):
         d: int,
         cms_file: Union[str, Path],
         *,
-        hash_dim: int = 2 ** 31 - 1,
+        hash_dim: int = 2**31 - 1,
         minDF: int = 1,
-        maxDF: int = 2 ** 32 - 1,
+        maxDF: int = 2**32 - 1,
         temperature: float = 1.0,
         filter: str = None,
         filter_out: bool = True,
@@ -399,7 +434,7 @@ class TFIDFVectorizer(TFVectorizer):
         ----------
         doc_freq : float
             A document frequency
-        
+
         Returns
         -------
         idf : float
