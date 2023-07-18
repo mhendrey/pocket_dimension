@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.1.1 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.1.3 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -26,14 +26,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Pocket Dimension<img src="_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Pocket Dimension
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.1
+                0.1.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -77,8 +82,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>pocket_dimension.random_projection</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pocket_dimension.random_projection</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -92,6 +97,20 @@
 </div>
 <div class="section" id="module-pocket_dimension.random_projection">
 <span id="pocket-dimension-random-projection"></span><h1>pocket_dimension.random_projection<a class="headerlink" href="#module-pocket_dimension.random_projection" title="Permalink to this headline">¶</a></h1>
+<p>Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors
+and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
+Frequency (TFIDF) data.</p>
+<p>Copyright (C) 2022 Matthew Hendrey &amp; Brendan Murphy</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="class">
 <dt id="pocket_dimension.random_projection.JustInTimeRandomProjection">
 <em class="property">class </em><code class="sig-prename descclassname">pocket_dimension.random_projection.</code><code class="sig-name descname">JustInTimeRandomProjection</code><span class="sig-paren">(</span><em class="sig-param">n_components='auto'</em>, <em class="sig-param">*</em>, <em class="sig-param">eps=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/random_projection.html#JustInTimeRandomProjection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.random_projection.JustInTimeRandomProjection" title="Permalink to this definition">¶</a></dt>
@@ -343,7 +362,7 @@ random projection to a dense embedding dimension.</p>
 
 <dl class="class">
 <dt id="pocket_dimension.vectorizer.TFVectorizer">
-<em class="property">class </em><code class="sig-prename descclassname">pocket_dimension.vectorizer.</code><code class="sig-name descname">TFVectorizer</code><span class="sig-paren">(</span><em class="sig-param">d: int</em>, <em class="sig-param">*</em>, <em class="sig-param">cms_file: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">hash_dim: int = 2147483647</em>, <em class="sig-param">minDF: int = 1</em>, <em class="sig-param">maxDF: int = 4294967295</em>, <em class="sig-param">temperature: float = 1.0</em>, <em class="sig-param">filter: str = None</em>, <em class="sig-param">filter_out: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pocket_dimension.vectorizer.</code><code class="sig-name descname">TFVectorizer</code><span class="sig-paren">(</span><em class="sig-param">d: int</em>, <em class="sig-param">*</em>, <em class="sig-param">cms_file: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">hash_dim: int = 2147483647</em>, <em class="sig-param">minDF: int = 1</em>, <em class="sig-param">maxDF: int = 4294967295</em>, <em class="sig-param">temperature: float = 1.0</em>, <em class="sig-param">min_n_features: int = 1</em>, <em class="sig-param">min_n_observations: int = 1</em>, <em class="sig-param">filter: str = None</em>, <em class="sig-param">filter_out: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Calculate a Term-Frequency vector representation by first using sklearn’s
 FeatureHasher to create a high-dimensional, sparse vector representation.
@@ -490,14 +509,18 @@ vector.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pocket_dimension.vectorizer.TFVectorizer.yield_features_counts">
-<code class="sig-name descname">yield_features_counts</code><span class="sig-paren">(</span><em class="sig-param">features: List[bytes], counts: List[int]</em><span class="sig-paren">)</span> &#x2192; Tuple[bytes, float]<a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer.yield_features_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer.yield_features_counts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yield the individual feature and count where the count is scaled by raising it
-to <span class="math notranslate nohighlight">\(1/temperature\)</span> and then multiplied by the idf value. For TFVectorizer
-the idf = 1.0.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">minDF`</span> <span class="pre">and</span> <span class="pre">``maxDF</span></code> or a <code class="docutils literal notranslate"><span class="pre">filter</span></code> is provided, then the individual
-features will be filtered appropriately. Only those that pass the filters will
-contribute to the final vector.</p>
+<dt id="pocket_dimension.vectorizer.TFVectorizer.filter_reweight_features">
+<code class="sig-name descname">filter_reweight_features</code><span class="sig-paren">(</span><em class="sig-param">features: List[bytes], counts: List[int]</em><span class="sig-paren">)</span> &#x2192; List[Tuple[bytes, float]]<a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer.filter_reweight_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer.filter_reweight_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the features accordingly and reweight the associated counts. The counts
+are scaled by raising them to <span class="math notranslate nohighlight">\(1/temperature\)</span> and then multiplied by the
+<code class="docutils literal notranslate"><span class="pre">idf</span></code> value. For TFVectorizer <span class="math notranslate nohighlight">\(idf=1.0\)</span>.</p>
+<p>Features will be filtered out if their document frequency is not within
+[<code class="docutils literal notranslate"><span class="pre">minDF</span></code>, <code class="docutils literal notranslate"><span class="pre">maxDF</span></code>] and if a <code class="docutils literal notranslate"><span class="pre">filter</span></code> is provided during initialization.
+Only those features that pass the filters will contribute to the final vector.</p>
+<p>After filtering, a final check is done to ensure that there are at least
+<code class="docutils literal notranslate"><span class="pre">min_n_features</span></code> features remaining and that there are at least
+<code class="docutils literal notranslate"><span class="pre">min_n_observations</span></code> observations of those features. Otherwise an empty list
+is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -506,8 +529,11 @@ to turn into a sparse vector representation</p></li>
 <li><p><strong>counts</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – Number of times that feature is present in a given record.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Yields</dt>
-<dd class="field-even"><p><em>Tuple[bytes, float]</em></p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Tuple[bytes, float]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -515,7 +541,8 @@ to turn into a sparse vector representation</p></li>
 <dl class="method">
 <dt id="pocket_dimension.vectorizer.TFVectorizer.yield_record">
 <code class="sig-name descname">yield_record</code><span class="sig-paren">(</span><em class="sig-param">records: Iterable[Dict], ids: List</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer.yield_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer.yield_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yields a generator of an individual record’s features/counts.</p>
+<dd><p>Yields a list of an individual record’s (features, values) where the values are
+the counts after reweighting them by <code class="docutils literal notranslate"><span class="pre">temperature</span></code> and/or <code class="docutils literal notranslate"><span class="pre">idf</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -526,7 +553,7 @@ the <cite>records</cite> passed in</p></li>
 </ul>
 </dd>
 <dt class="field-even">Yields</dt>
-<dd class="field-even"><p><em>Generator</em> – Of the appropriate individual (features,counts) for a given record</p>
+<dd class="field-even"><p><em>List[Tuple[bytes, float]]</em> – Of the appropriate individual (feature, value) for a given record</p>
 </dd>
 </dl>
 </dd></dl>
@@ -578,7 +605,7 @@ along with this program.  If not, see &lt;<a class="reference external" href="ht
 
 <dl class="function">
 <dt id="tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss">
-<code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_distributional_johnson_lindenstrauss</code><span class="sig-paren">(</span><em class="sig-param">n: int = 1000</em>, <em class="sig-param">min_n_features: int = 5</em>, <em class="sig-param">max_n_features: int = 100</em>, <em class="sig-param">eps: float = 0.1</em>, <em class="sig-param">delta_pad: float = 0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_distributional_johnson_lindenstrauss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_distributional_johnson_lindenstrauss</code><span class="sig-paren">(</span><em class="sig-param">n: int = 1000</em>, <em class="sig-param">min_n_features: int = 5</em>, <em class="sig-param">max_n_features: int = 100</em>, <em class="sig-param">eps: float = 0.1</em>, <em class="sig-param">delta_pad: float = 0.01</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_distributional_johnson_lindenstrauss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the statistical guarantees of the Distributional Johnson-Lindenstrauss Lemma
 using a method for finding the best possible delta (failure rate) for a given
 epsilon (error rate) of the difference of the L2 norm between vectors in the
@@ -601,7 +628,7 @@ Proceedings of Machine Learning Research <strong>134</strong>, 1 (2021)
 <li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Error rate. Default is 0.1</p></li>
 <li><p><strong>delta_pad</strong> (<em>float</em><em>, </em><em>optional</em>) – Amount by which we pad the calculated best delta value. This is done to reduce
 the probability of failure given the vagaries of running statistical tests.
-Default is 0.005</p></li>
+Default is 0.01</p></li>
 </ul>
 </dd>
 </dl>
@@ -651,6 +678,18 @@ The embedding dimension is determined by the requested error rate, eps.</p>
 <dt id="tests.test_pocket_dimension.test_tf_cms">
 <code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_tf_cms</code><span class="sig-paren">(</span><em class="sig-param">tmp_path</em>, <em class="sig-param">d: int = 64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_tf_cms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_tf_cms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test that using a count-min sketch for filtering works properly</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_pocket_dimension.test_tf_data_quality">
+<code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_tf_data_quality</code><span class="sig-paren">(</span><em class="sig-param">d: int = 64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_tf_data_quality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_tf_data_quality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that records without minimium data quality (min_n_features &amp;
+min_n_observations) return vectors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>d</strong> (<em>int</em><em>, </em><em>optional</em>) – Embedding dimension. Default is 64</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">

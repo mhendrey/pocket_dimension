@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tests.test_pocket_dimension &mdash; Pocket Dimension 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>tests.test_pocket_dimension &mdash; Pocket Dimension 0.1.3 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -24,14 +24,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Pocket Dimension<img src="../../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Pocket Dimension
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.1
+                0.1.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,9 +80,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>tests.test_pocket_dimension</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.test_pocket_dimension</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -138,21 +143,24 @@
         <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">S2</span><span class="o">.</span><span class="n">indices</span><span class="p">:</span>
             <span class="n">total</span> <span class="o">+=</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">S2</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">+=</span> <span class="n">value</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">value</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S2</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">S2</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">S1</span><span class="o">.</span><span class="n">indices</span><span class="p">:</span>
             <span class="n">total</span> <span class="o">+=</span> <span class="mf">0.0</span>  <span class="c1"># already accounted for above</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">+=</span> <span class="n">value</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">value</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="n">total</span></div>
 
 
 <div class="viewcode-block" id="test_johnson_lindenstrauss"><a class="viewcode-back" href="../../modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss">[docs]</a><span class="k">def</span> <span class="nf">test_johnson_lindenstrauss</span><span class="p">(</span>
-    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="n">min_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">min_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">max_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the the Johnson-Lindenstrauss Lemma holds between the sparse vectors and the</span>
-<span class="sd">    randomly projected dense vectors. This uses the results found in </span>
+<span class="sd">    randomly projected dense vectors. This uses the results found in</span>
 
 <span class="sd">    https://cs.stanford.edu/people/mmahoney/cs369m/Lectures/lecture1.pdf</span>
 
@@ -207,7 +215,7 @@
     <span class="n">min_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">max_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">delta_pad</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span>
+    <span class="n">delta_pad</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the statistical guarantees of the Distributional Johnson-Lindenstrauss Lemma</span>
@@ -239,7 +247,7 @@
 <span class="sd">    delta_pad : float, optional</span>
 <span class="sd">        Amount by which we pad the calculated best delta value. This is done to reduce</span>
 <span class="sd">        the probability of failure given the vagaries of running statistical tests.</span>
-<span class="sd">        Default is 0.005</span>
+<span class="sd">        Default is 0.01</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">random_sparse_vectors</span><span class="p">(</span>
         <span class="n">n</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="n">min_n_features</span><span class="p">,</span> <span class="n">max_n_features</span><span class="o">=</span><span class="n">max_n_features</span>
@@ -253,7 +261,7 @@
             <span class="n">d</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">distributional_johnson_lindenstrauss_optimal_delta</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+            <span class="n">distributional_johnson_lindenstrauss_optimal_delta</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
             <span class="o">+</span> <span class="n">delta_pad</span>
         <span class="p">)</span>
         <span class="n">metric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -267,7 +275,7 @@
 
 <div class="viewcode-block" id="test_tf"><a class="viewcode-back" href="../../modules.html#tests.test_pocket_dimension.test_tf">[docs]</a><span class="k">def</span> <span class="nf">test_tf</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Basic test that things look right. </span>
+<span class="sd">    Basic test that things look right.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -285,14 +293,14 @@
 
     <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
-    <span class="n">cosine_0_2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">assert</span> <span class="n">cosine_0_2</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_2=:.5f} should be 1.0&quot;</span>
+    <span class="n">cosine_0_1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">cosine_0_1</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_1=:.5f} should be 1.0&quot;</span>
     <span class="k">assert</span> <span class="n">ids</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
     <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;one&quot;</span>
     <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;two&quot;</span>
     <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;three&quot;</span>
-    <span class="n">cosine_1_3</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-    <span class="k">assert</span> <span class="n">cosine_1_3</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;{cosine_1_3=:.5f} should be small&quot;</span></div>
+    <span class="n">cosine_0_2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">cosine_0_2</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_2=:.5f} should be small&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_tf_filter"><a class="viewcode-back" href="../../modules.html#tests.test_pocket_dimension.test_tf_filter">[docs]</a><span class="k">def</span> <span class="nf">test_tf_filter</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
@@ -409,7 +417,53 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span> <span class="n">minDF</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxDF</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_nofilter</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{i}</span><span class="s2"> was not filtered&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that we get back no results if min_n_features is not enough</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span> <span class="n">minDF</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxDF</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{X.shape}</span><span class="s2"> should be (0, </span><span class="si">{d}</span><span class="s2">)&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that we get back results if min_n_features enough</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span> <span class="n">minDF</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxDF</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{X.shape}</span><span class="s2"> should be (3, </span><span class="si">{d}</span><span class="s2">)&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_nofilter</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{i}</span><span class="s2"> was not filtered&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that we get back no results if min_n_observations is not met</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span>
+        <span class="n">d</span><span class="p">,</span>
+        <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span>
+        <span class="n">minDF</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">maxDF</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">min_n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">min_n_observations</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{X.shape}</span><span class="s2"> should be (0, </span><span class="si">{d}</span><span class="s2">)&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that we get back results if min_n_observations is met</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span>
+        <span class="n">d</span><span class="p">,</span>
+        <span class="n">cms_file</span><span class="o">=</span><span class="n">cms_file</span><span class="p">,</span>
+        <span class="n">minDF</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">maxDF</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">min_n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">min_n_observations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{X.shape}</span><span class="s2"> should be (3, </span><span class="si">{d}</span><span class="s2">)&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_nofilter</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{i}</span><span class="s2"> was not filtered&quot;</span></div>
 
 
@@ -496,7 +550,11 @@
             <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;e&quot;</span><span class="p">],</span>
             <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
         <span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;three&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;d&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;three&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;d&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">},</span>
     <span class="p">]</span>
     <span class="n">cms_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;tf_cms.npz&quot;</span><span class="p">)</span>
     <span class="n">cms</span> <span class="o">=</span> <span class="n">CountMin</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
@@ -516,6 +574,50 @@
 
     <span class="c1"># Now the b&quot;e&quot; should contribute nothing to the vector since idf = 0.0</span>
     <span class="k">assert</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_tf_data_quality"><a class="viewcode-back" href="../../modules.html#tests.test_pocket_dimension.test_tf_data_quality">[docs]</a><span class="k">def</span> <span class="nf">test_tf_data_quality</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that records without minimium data quality (min_n_features &amp;</span>
+<span class="sd">    min_n_observations) return vectors</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : int, optional</span>
+<span class="sd">        Embedding dimension. Default is 64</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;three&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;four&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;five&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+    <span class="p">]</span>
+
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_n_observations</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;one&quot;</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;two&quot;</span>
+    <span class="n">cosine_0_1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">cosine_0_1</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_1=:.5f} should be 1.0&quot;</span>
+
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_n_observations</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;one&quot;</span>
+
+    <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">min_n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_n_observations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;one&quot;</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;two&quot;</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;three&quot;</span>
+    <span class="k">assert</span> <span class="n">ids</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;four&quot;</span>
+    <span class="n">cosine_0_1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">cosine_0_1</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_1=:.5f} should be 1.0&quot;</span>
+    <span class="n">cosine_0_2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">cosine_0_2</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;{cosine_0_2=:.5f} should be 1.0&quot;</span></div>
 </pre></div>
 
            </div>
