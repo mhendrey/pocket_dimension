@@ -84,6 +84,13 @@ class TFVectorizer:
         (1/temperature). Using a value above 1.0 flattens the values relative to
         each other. Using a value below 1.0 sharpens the contrast of values
         relative to each other.
+    min_n_features : int
+        Must have at least this many features in order to create a vector. Useful as a
+        data quality check. Default is 1
+    min_n_observations : int
+        Must have at least his many observations in order to create a vector. Useful as
+        a data quality check. This is the sum of counts over the different features for
+        a given item. Default is 1
     filter : pybloomfilter3, option
         Bloom filter to use for filtering features before creating sparse vectors.
         Default is None
@@ -105,6 +112,10 @@ class TFVectorizer:
         dense vectors
     temperature : float
         Exponential scale raw counts by 1 / temperature when making TF vector
+    min_n_features : int
+        Must have at least this many features in order to create a vector
+    min_n_observations : int
+        Must have at least his many observations in order to create a vector
     cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8
         A count-min sketch that stores document frequency info
     minDF : int
@@ -369,6 +380,8 @@ class TFIDFVectorizer(TFVectorizer):
         minDF: int = 1,
         maxDF: int = 2**32 - 1,
         temperature: float = 1.0,
+        min_n_features: int = 1,
+        min_n_observations: int = 1,
         filter: str = None,
         filter_out: bool = True,
     ):
@@ -400,6 +413,13 @@ class TFIDFVectorizer(TFVectorizer):
             (1/temperature). Using a value above 1.0 flattens the values relative to
             each other. Using a value below 1.0 sharpens the contrast of values
             relative to each other.
+        min_n_features : int, optional
+            Must have at least this many features in order to create a vector. Useful
+            as a data quality check. Default is 1
+        min_n_observations : int, optional
+            Must have at least his many observations in order to create a vector.
+            Useful as a data quality check. This is the sum of counts over the
+            different features for a given item. Default is 1
         filter : pybloomfilter3, option
             Bloom filter to use for filtering features before creating sparse vectors.
             Default is None
@@ -415,6 +435,8 @@ class TFIDFVectorizer(TFVectorizer):
             minDF=minDF,
             maxDF=maxDF,
             temperature=temperature,
+            min_n_features=min_n_features,
+            min_n_observations=min_n_observations,
             filter=filter,
             filter_out=filter_out,
         )

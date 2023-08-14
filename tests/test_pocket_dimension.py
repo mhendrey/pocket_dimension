@@ -524,3 +524,65 @@ def test_tf_data_quality(d: int = 64):
     assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
     cosine_0_2 = X[0].dot(X[2])
     assert cosine_0_2 == approx(1.0), f"{cosine_0_2=:.5f} should be 1.0"
+
+
+def test_tfidf_data_quality(tmp_path, d: int = 64):
+    """
+    Test that records without minimium data quality (min_n_features &
+    min_n_observations) return vectors
+
+    Parameters
+    ----------
+    tmp_path: str
+        Local temp directory to save count-min sketch to
+    d : int, optional
+        Embedding dimension. Default is 64
+    """
+    cms_file = str(tmp_path / "tfidf_cms.npz")
+    cms = CountMin("linear", width=300)
+    cms.n_added_records[1] = 500
+    cms.update([b"a"] * 3)
+    cms.update([b"b"] * 5)
+    cms.update([b"c"] * 10)
+    cms.update([b"d"] * 100)
+    cms.update([b"e"] * 500)
+    cms.save(cms_file)
+
+    records = [
+        {"id": "one", "features": [b"a", b"b", b"c"], "counts": [6, 6, 6]},
+        {"id": "two", "features": [b"a", b"b", b"c"], "counts": [5, 5, 5]},
+        {"id": "three", "features": [b"a", b"b", b"c"], "counts": [1, 1, 1]},
+        {"id": "four", "features": [b"a", b"b"], "counts": [20, 20]},
+        {"id": "five", "features": [b"a", b"b"], "counts": [1, 1]},
+    ]
+
+    embedder = TFIDFVectorizer(
+        d, cms_file=cms_file, min_n_features=3, min_n_observations=15
+    )
+    X, ids = embedder(records)
+    assert X.shape == (2, d)
+    assert ids[0] == "one"
+    assert ids[1] == "two"
+    cosine_0_1 = X[0].dot(X[1])
+    assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
+
+    embedder = TFIDFVectorizer(
+        d, cms_file=cms_file, min_n_features=3, min_n_observations=16
+    )
+    X, ids = embedder(records)
+    assert X.shape == (1, d)
+    assert ids[0] == "one"
+
+    embedder = TFIDFVectorizer(
+        d, cms_file=cms_file, min_n_features=2, min_n_observations=3
+    )
+    X, ids = embedder(records)
+    assert X.shape == (4, d)
+    assert ids[0] == "one"
+    assert ids[1] == "two"
+    assert ids[2] == "three"
+    assert ids[3] == "four"
+    cosine_0_1 = X[0].dot(X[1])
+    assert cosine_0_1 == approx(1.0), f"{cosine_0_1=:.5f} should be 1.0"
+    cosine_0_2 = X[0].dot(X[2])
+    assert cosine_0_2 == approx(1.0), f"{cosine_0_2=:.5f} should be 1.0"
