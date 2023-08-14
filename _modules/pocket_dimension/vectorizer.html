@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.vectorizer &mdash; Pocket Dimension 0.1.3 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>pocket_dimension.vectorizer &mdash; Pocket Dimension 0.1.4 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -32,7 +32,7 @@
               <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -178,6 +178,13 @@
 <span class="sd">        (1/temperature). Using a value above 1.0 flattens the values relative to</span>
 <span class="sd">        each other. Using a value below 1.0 sharpens the contrast of values</span>
 <span class="sd">        relative to each other.</span>
+<span class="sd">    min_n_features : int</span>
+<span class="sd">        Must have at least this many features in order to create a vector. Useful as a</span>
+<span class="sd">        data quality check. Default is 1</span>
+<span class="sd">    min_n_observations : int</span>
+<span class="sd">        Must have at least his many observations in order to create a vector. Useful as</span>
+<span class="sd">        a data quality check. This is the sum of counts over the different features for</span>
+<span class="sd">        a given item. Default is 1</span>
 <span class="sd">    filter : pybloomfilter3, option</span>
 <span class="sd">        Bloom filter to use for filtering features before creating sparse vectors.</span>
 <span class="sd">        Default is None</span>
@@ -199,6 +206,10 @@
 <span class="sd">        dense vectors</span>
 <span class="sd">    temperature : float</span>
 <span class="sd">        Exponential scale raw counts by 1 / temperature when making TF vector</span>
+<span class="sd">    min_n_features : int</span>
+<span class="sd">        Must have at least this many features in order to create a vector</span>
+<span class="sd">    min_n_observations : int</span>
+<span class="sd">        Must have at least his many observations in order to create a vector</span>
 <span class="sd">    cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8</span>
 <span class="sd">        A count-min sketch that stores document frequency info</span>
 <span class="sd">    minDF : int</span>
@@ -463,6 +474,8 @@
         <span class="n">minDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">maxDF</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">min_n_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">min_n_observations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">filter_out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -494,6 +507,13 @@
 <span class="sd">            (1/temperature). Using a value above 1.0 flattens the values relative to</span>
 <span class="sd">            each other. Using a value below 1.0 sharpens the contrast of values</span>
 <span class="sd">            relative to each other.</span>
+<span class="sd">        min_n_features : int, optional</span>
+<span class="sd">            Must have at least this many features in order to create a vector. Useful</span>
+<span class="sd">            as a data quality check. Default is 1</span>
+<span class="sd">        min_n_observations : int, optional</span>
+<span class="sd">            Must have at least his many observations in order to create a vector.</span>
+<span class="sd">            Useful as a data quality check. This is the sum of counts over the</span>
+<span class="sd">            different features for a given item. Default is 1</span>
 <span class="sd">        filter : pybloomfilter3, option</span>
 <span class="sd">            Bloom filter to use for filtering features before creating sparse vectors.</span>
 <span class="sd">            Default is None</span>
@@ -509,6 +529,8 @@
             <span class="n">minDF</span><span class="o">=</span><span class="n">minDF</span><span class="p">,</span>
             <span class="n">maxDF</span><span class="o">=</span><span class="n">maxDF</span><span class="p">,</span>
             <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="n">min_n_features</span><span class="o">=</span><span class="n">min_n_features</span><span class="p">,</span>
+            <span class="n">min_n_observations</span><span class="o">=</span><span class="n">min_n_observations</span><span class="p">,</span>
             <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
             <span class="n">filter_out</span><span class="o">=</span><span class="n">filter_out</span><span class="p">,</span>
         <span class="p">)</span>

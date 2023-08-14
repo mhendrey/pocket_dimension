@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.1.3 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.1.4 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -34,7 +34,7 @@
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -351,7 +351,7 @@ GNU General Public License for more details.</p>
 along with this program.  If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="class">
 <dt id="pocket_dimension.vectorizer.TFIDFVectorizer">
-<em class="property">class </em><code class="sig-prename descclassname">pocket_dimension.vectorizer.</code><code class="sig-name descname">TFIDFVectorizer</code><span class="sig-paren">(</span><em class="sig-param">d: int, cms_file: Union[str, pathlib.Path], *, hash_dim: int = 2147483647, minDF: int = 1, maxDF: int = 4294967295, temperature: float = 1.0, filter: str = None, filter_out: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFIDFVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFIDFVectorizer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pocket_dimension.vectorizer.</code><code class="sig-name descname">TFIDFVectorizer</code><span class="sig-paren">(</span><em class="sig-param">d: int, cms_file: Union[str, pathlib.Path], *, hash_dim: int = 2147483647, minDF: int = 1, maxDF: int = 4294967295, temperature: float = 1.0, min_n_features: int = 1, min_n_observations: int = 1, filter: str = None, filter_out: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFIDFVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFIDFVectorizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer" title="pocket_dimension.vectorizer.TFVectorizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pocket_dimension.vectorizer.TFVectorizer</span></code></a></p>
 <p>Randomly project records by first applying a high-dimensional feature hasher
 to create a sparse vector representation of the tf-idf and then applying the
@@ -387,6 +387,11 @@ can have to be included in the embedding. Default is 2**32 - 1.</p></li>
 (1/temperature). Using a value above 1.0 flattens the values relative to
 each other. Using a value below 1.0 sharpens the contrast of values
 relative to each other.</p></li>
+<li><p><strong>min_n_features</strong> (<em>int</em>) – Must have at least this many features in order to create a vector. Useful as a
+data quality check. Default is 1</p></li>
+<li><p><strong>min_n_observations</strong> (<em>int</em>) – Must have at least his many observations in order to create a vector. Useful as
+a data quality check. This is the sum of counts over the different features for
+a given item. Default is 1</p></li>
 <li><p><strong>filter</strong> (<em>pybloomfilter3</em><em>, </em><em>option</em>) – Bloom filter to use for filtering features before creating sparse vectors.
 Default is None</p></li>
 <li><p><strong>filter_out</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, then remove features that are in the filter before making the
@@ -447,6 +452,28 @@ dense vectors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pocket_dimension.vectorizer.TFVectorizer.min_n_features">
+<code class="sig-name descname">min_n_features</code><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer.min_n_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must have at least this many features in order to create a vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pocket_dimension.vectorizer.TFVectorizer.min_n_observations">
+<code class="sig-name descname">min_n_observations</code><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer.min_n_observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must have at least his many observations in order to create a vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -710,6 +737,21 @@ expected way</p>
 <code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_tfidf</code><span class="sig-paren">(</span><em class="sig-param">tmp_path</em>, <em class="sig-param">d: int = 64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_tfidf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_tfidf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test that a tfidf vectorization causes one feature’s tfidf to be zero and match
 a vector that does not have this feature</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_pocket_dimension.test_tfidf_data_quality">
+<code class="sig-prename descclassname">tests.test_pocket_dimension.</code><code class="sig-name descname">test_tfidf_data_quality</code><span class="sig-paren">(</span><em class="sig-param">tmp_path</em>, <em class="sig-param">d: int = 64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_tfidf_data_quality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_tfidf_data_quality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that records without minimium data quality (min_n_features &amp;
+min_n_observations) return vectors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tmp_path</strong> (<em>str</em>) – Local temp directory to save count-min sketch to</p></li>
+<li><p><strong>d</strong> (<em>int</em><em>, </em><em>optional</em>) – Embedding dimension. Default is 64</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
