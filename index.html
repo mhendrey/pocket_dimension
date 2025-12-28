@@ -1,19 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation &mdash; Pocket Dimension 0.1.4 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <title>Documentation &mdash; Pocket Dimension 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,9 +34,6 @@
             Pocket Dimension
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                0.1.4
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -51,13 +50,59 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pocket_dimension.random_projection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pocket_dimension.random_projection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection"><code class="docutils literal notranslate"><span class="pre">JustInTimeRandomProjection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection.n_components_"><code class="docutils literal notranslate"><span class="pre">JustInTimeRandomProjection.n_components_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection.fit"><code class="docutils literal notranslate"><span class="pre">JustInTimeRandomProjection.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection.transform"><code class="docutils literal notranslate"><span class="pre">JustInTimeRandomProjection.transform()</span></code></a></li>
 </ul>
-<p class="caption"><span class="caption-text">Admin</span></p>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.distributional_johnson_lindenstrauss_optimal_delta"><code class="docutils literal notranslate"><span class="pre">distributional_johnson_lindenstrauss_optimal_delta()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.random_projection"><code class="docutils literal notranslate"><span class="pre">random_projection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.random_sparse_vectors"><code class="docutils literal notranslate"><span class="pre">random_sparse_vectors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.d"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.d</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.hash_dim"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.hash_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.hasher"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.hasher</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.jit_rp"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.jit_rp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.temperature"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.temperature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.min_n_features"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.min_n_features</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.min_n_observations"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.min_n_observations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.cms"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.cms</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.minDF"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.minDF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.maxDF"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.maxDF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.filter"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.filter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.filter_out"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.filter_out</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.filter_reweight_features"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.filter_reweight_features()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.yield_record"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.yield_record()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_filter"><code class="docutils literal notranslate"><span class="pre">test_tf_filter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_temp"><code class="docutils literal notranslate"><span class="pre">test_tf_temp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tfidf"><code class="docutils literal notranslate"><span class="pre">test_tfidf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tfidf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tfidf_data_quality()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Admin</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="license.html#license-requirements">License Requirements</a></li>
@@ -99,23 +144,23 @@ random projection is the used to be able to take records {“id”: str, “feat
 “counts”: List[int]}, convert them into sparse random vectors using scikit-learn’s FeatureHasher,
 and then project them down to lower dimensional dense vectors.</p>
 <p>When the very large sparse universe becomes too inhospitable, escape into a cozy pocket dimension.</p>
-<div class="section" id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<section id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h1>
 <p>Documentation for the API and theoretical foundations of the algorithms can be
 found at <a class="reference external" href="https://mhendrey.github.io/pocket_dimension">https://mhendrey.github.io/pocket_dimension</a></p>
-</div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <p>Pocket Dimension may be install using pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pocket_dimension</span>
 </pre></div>
 </div>
 <p>I’m working on a conda-forge version, but this uses pybloomfiltermmap3 which is currently only on PyPi.</p>
-</div>
-<div class="section" id="modules">
-<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="pocket-dimension">
-<h2>Pocket Dimension<a class="headerlink" href="#pocket-dimension" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Link to this heading"></a></h1>
+<section id="pocket-dimension">
+<h2>Pocket Dimension<a class="headerlink" href="#pocket-dimension" title="Link to this heading"></a></h2>
 <p>Contains the Numba implementation of the random projection function and the TFVectorizer and
 TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors into dense vectors.</p>
 <div class="toctree-wrapper compound">
@@ -129,15 +174,40 @@ TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors int
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pocket_dimension.random_projection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pocket_dimension.random_projection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection"><code class="docutils literal notranslate"><span class="pre">JustInTimeRandomProjection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.distributional_johnson_lindenstrauss_optimal_delta"><code class="docutils literal notranslate"><span class="pre">distributional_johnson_lindenstrauss_optimal_delta()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.random_projection"><code class="docutils literal notranslate"><span class="pre">random_projection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.random_sparse_vectors"><code class="docutils literal notranslate"><span class="pre">random_sparse_vectors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_filter"><code class="docutils literal notranslate"><span class="pre">test_tf_filter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_temp"><code class="docutils literal notranslate"><span class="pre">test_tf_temp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tfidf"><code class="docutils literal notranslate"><span class="pre">test_tfidf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tfidf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tfidf_data_quality()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Admin</span></p>
+<p class="caption" role="heading"><span class="caption-text">Admin</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="license.html#license-requirements">License Requirements</a></li>
@@ -148,16 +218,16 @@ TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors int
 <li class="toctree-l1"><a class="reference internal" href="help.html">Help</a></li>
 </ul>
 </div>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
+</section>
 
 
            </div>
