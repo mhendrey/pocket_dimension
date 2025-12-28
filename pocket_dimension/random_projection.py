@@ -26,11 +26,11 @@ from sklearn.random_projection import (
     johnson_lindenstrauss_min_dim,
 )
 from sklearn.exceptions import DataDimensionalityWarning
-from sklearn.utils.validation import check_is_fitted
+from sklearn.utils.validation import check_is_fitted, validate_data
+from sklearn.base import _fit_context
 from scipy.optimize import minimize
 from scipy.sparse import csr_matrix
 from scipy.stats import beta
-from typing import Dict, Iterable, List, Tuple, Type, Union
 import warnings
 
 
@@ -328,6 +328,7 @@ class JustInTimeRandomProjection(BaseRandomProjection):
                 f"{n_components=:}. It must either be a positive integer or 'auto'"
             )
 
+    @_fit_context(prefer_skip_nested_validation=True)
     def fit(self, X, y=None):
         """
         This is essential a no-op function since there is no need to generate a random
@@ -347,7 +348,9 @@ class JustInTimeRandomProjection(BaseRandomProjection):
         self : object
             JustInTimeRandomProjection class instance
         """
-        X = self._validate_data(X, accept_sparse="csr", dtype=[np.float32, np.float64])
+        X = validate_data(
+            self, X, accept_sparse="csr", dtype=[np.float32, np.float64], reset=True
+        )
         n_samples, n_features = X.shape
 
         if self.n_components == "auto":
@@ -389,8 +392,8 @@ class JustInTimeRandomProjection(BaseRandomProjection):
             Projected data of shape (n_samples, n_components)
         """
         check_is_fitted(self)
-        X = self._validate_data(
-            X, accept_sparse="csr", reset=False, dtype=[np.float32, np.float64]
+        X = validate_data(
+            self, X, accept_sparse="csr", reset=False, dtype=[np.float32, np.float64]
         )
         if not isinstance(X, csr_matrix):
             raise TypeError(f"X must be a sparse csr_matrix. You gave {type(X)}")
