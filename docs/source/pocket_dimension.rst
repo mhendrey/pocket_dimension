@@ -47,7 +47,7 @@ The Details
 Random projection is a dimension reduction technique that has some mathematical
 guarantees thanks to the Johnson-Lindenstrauss Lemma, though in practice it is common
 to get good results even if you blow past the mathematical guarantees to lower
-dimensions. Their are two different implementations within
+dimensions. There are two different implementations within
 `scikit-learn.random_projection`, `GaussianRandomProjection` and
 `SparseRandomProjection`. The `GaussianRandomProjection` will make a dense projection
 matrix which will quickly exhaust RAM if the one dimension is large. The

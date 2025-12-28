@@ -80,7 +80,7 @@ def random_projection(
         The column indices of the nonzero elements in the sparse csr_matrix
     indptr : np.ndarray, shape=(n_rows+1,), dtype=int64
         Pointers into `data` and `indices` to indicate where the rows start and stop.
-        If you have just a single record, then indtpr=[0, len(data)]
+        If you have just a single record, then indptr=[0, len(data)]
     d : int
         Embedding dimension of dense vectors.
 
@@ -256,7 +256,7 @@ class JustInTimeRandomProjection(BaseRandomProjection):
     across the available cpus.
 
     This allows you to utilize sparse starting dimension of 2\*\*31 - 1 without any
-    issues. For really values of ``n_components`` transforming will also be faster
+    issues. For large values of ``n_components`` transforming will also be faster
     than SparseRandomProjection.
 
     Parameters

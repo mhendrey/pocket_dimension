@@ -1,5 +1,5 @@
 """
-Pocket dimension provides a memory-efficient, dense, random projection of sparse vectors
+Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors
 and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
 Frequency (TF-IDF) data.
 

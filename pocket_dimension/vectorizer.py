@@ -88,7 +88,7 @@ class TFVectorizer:
         Must have at least this many features in order to create a vector. Useful as a
         data quality check. Default is 1
     min_n_observations : int
-        Must have at least his many observations in order to create a vector. Useful as
+        Must have at least this many observations in order to create a vector. Useful as
         a data quality check. This is the sum of counts over the different features for
         a given item. Default is 1
     filter : pybloomfilter3, option
@@ -115,11 +115,11 @@ class TFVectorizer:
     min_n_features : int
         Must have at least this many features in order to create a vector
     min_n_observations : int
-        Must have at least his many observations in order to create a vector
+        Must have at least this many observations in order to create a vector
     cms : sketchnu.CountMinLinear | sketchnu.CountMinLog16 | sketchnu.CountMinLog8
         A count-min sketch that stores document frequency info
     minDF : int
-        Minimum document frequency a feature must have to be incuded in the vector
+        Minimum document frequency a feature must have to be included in the vector
     maxDF : int
         Maximum document frequency a feature can have to be included in the vector
     filter : pybloomfilter.BloomFilter
@@ -176,7 +176,7 @@ class TFVectorizer:
             Must have at least this many features in order to create a vector. Useful
             as a data quality check. Default is 1
         min_n_observations : int, optional
-            Must have at least his many observations in order to create a vector.
+            Must have at least this many observations in order to create a vector.
             Useful as a data quality check. This is the sum of counts over the
             different features for a given item. Default is 1
         filter : pybloomfilter3, option
@@ -268,7 +268,7 @@ class TFVectorizer:
         Return the inverse document frequency given ``doc_freq``
 
         **NOTE** For TFVectorizer, this simply returns 1.0. Included here for
-        compatability with TFIDFVectorizer
+        compatibility with TFIDFVectorizer
 
         Parameters
         ----------
@@ -417,7 +417,7 @@ class TFIDFVectorizer(TFVectorizer):
             Must have at least this many features in order to create a vector. Useful
             as a data quality check. Default is 1
         min_n_observations : int, optional
-            Must have at least his many observations in order to create a vector.
+            Must have at least this many observations in order to create a vector.
             Useful as a data quality check. This is the sum of counts over the
             different features for a given item. Default is 1
         filter : pybloomfilter3, option
