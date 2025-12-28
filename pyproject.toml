@@ -25,3 +25,6 @@ dev = [
     "ipython>=9.8.0",
     "pytest>=9.0.2",
 ]
+
+[tool.setuptools]
+packages = ["pocket_dimension"]
