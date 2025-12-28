@@ -4,7 +4,8 @@ version = "0.2.0"
 description = "Memory-efficient, dense, random projection of sparse vectors."
 readme = "README.rst"
 authors = [{name = "Matthew Hendrey", email = "matthew.hendrey@gmail.com"}]
-license = {file = "LICENSE"}
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
 keywords = ["numba", "random projection", "term-frequency", "tfidf", "dimension reduction"]
 requires-python = ">=3.11"
 dependencies = [
