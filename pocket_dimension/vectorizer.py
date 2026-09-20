@@ -70,7 +70,7 @@ def numba_idf_bm25(doc_freq, n_records):
     -------
     float32
     """
-    idf = np.log(max(float32(1.0), (n_records + float32(0.5)) / (doc_freq + float32(0.5))))
+    idf = np.log((n_records + float32(1.0)) / (min(n_records,doc_freq) + float32(0.5)))
     return idf
 
 
@@ -697,7 +697,6 @@ class BM25Vectorizer(TFVectorizer):
 
         # Document length normalization factor
         length_norm = self.k1 * (1.0 - self.b + self.b * (doc_len / self.avg_doc_len))
-        k1_plus_1 = self.k1 + 1.0
 
         features_values = []
         n_features = 0
@@ -712,7 +711,7 @@ class BM25Vectorizer(TFVectorizer):
                 self.minDF <= doc_freq and doc_freq <= self.maxDF
             ):
                 # Compute BM25 score
-                bm25_score = self._idf(doc_freq) * tf * k1_plus_1 / (tf + length_norm)
+                bm25_score = self._idf(doc_freq) * tf / (tf + length_norm)
                 features_values.append((f, bm25_score))
                 n_features += 1
                 n_observations += counts[i]

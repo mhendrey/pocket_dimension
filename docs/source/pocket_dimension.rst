@@ -11,9 +11,16 @@ dimension dense vectors (~256). It does this by not storing the entire
 it needs on the fly based upon the non-zero elements of any given sparse vector. This
 function is implemented in Numba to speed things up.
 
-Besides the random projection function, Pocket Dimension comes with two classes that
-can create either Term-Frequency or Term-Frequency, Inverse Document Frequency vectors
-into dense vectors from starting records.
+Besides the random projection function, Pocket Dimension includes a small family of
+vectorizers that convert record-level sparse feature counts into dense vectors:
+
+* ``TFVectorizer`` for term-frequency weighting
+* ``TFIDFVectorizer`` for term-frequency inverse-document-frequency weighting
+* ``BM25Vectorizer`` for BM25-style weighting used in ranking-heavy retrieval tasks
+
+The vectorizers all accept a count-min sketch via ``cms_file``. This can be a path to a
+saved sketch on disk or an already instantiated sketch object, which is kept for backward
+compatibility and allows a shared sketch to be reused in memory.
 
 Usage
 -----
@@ -21,7 +28,8 @@ Usage
 ::
 
     import numpy as np
-    from pocket_dimension.vectorizer import TFVectorizer
+    from pocket_dimension.vectorizer import TFVectorizer, BM25Vectorizer
+    from sketchnu.countmin import CountMin
 
     # Make some data. "one" and "two" should be similar & "abc" should be different
     records = [
@@ -41,6 +49,21 @@ Usage
     print(f"Vectors 'one' and 'abc' have cosine similarity = {cosine_one_abc:.4f}")
     # Vectors 'one' and 'two' have cosine similarity = 0.9926
     # Vectors 'one' and 'abc' have cosine similarity = -0.0177
+
+    # BM25 uses a count-min sketch to estimate document frequencies and corpus statistics.
+    cms = CountMin("linear", width=4096)
+    for rec in records:
+        for feature, count in zip(rec["features"], rec["counts"]):
+            cms.add(feature)  # BM25 uses the number of documents a term appears in, not the total count
+        cms.n_added_records[1] += 1  # increment the number of 'documents' added to the sketch
+
+    bm25 = BM25Vectorizer(128, cms_file=cms)
+    X_bm25, ids_bm25 = bm25(records)
+
+The BM25 vectorizer is especially useful when you want a ranking-oriented weighting that
+accounts for per-document length normalization as well as inverse document frequency.
+In API usage, ``cms_file`` may be provided either as a saved sketch path or as an in-memory
+``CountMinLinear`` instance (or subclass such as ``CountMinLog8`` / ``CountMinLog16``).
 
 The Details
 -----------

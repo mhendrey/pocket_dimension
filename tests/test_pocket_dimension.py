@@ -81,6 +81,7 @@ def test_johnson_lindenstrauss(
     d = 24 \* log(n) / (3 \* eps\*\*2 - 2 \* eps \*\* 3)
     ...
 
+
     where n is the number of vectors.  This does the full n(n-1)/2 comparisions.
 
     Parameters
@@ -138,12 +139,10 @@ def test_distributional_johnson_lindenstrauss(
     Proceedings of Machine Learning Research **134**, 1 (2021)
     http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf
 
-    This paper provides the optimal possible error probability
+    This paper provides the optimal possible error probability::
 
-    ...
-    delta(sparse_dim, embed_dim, eps) =
+        delta(sparse_dim, embed_dim, eps) =
             P[abs(\|Ax\|\*\*2 - \|x\|\*\*2) > eps * \|x\|\*\*2]
-    ...
 
     given the best possible matrix A and the worst possible data x.
 
@@ -463,7 +462,7 @@ def test_numba_idf_bm25():
     doc_freq = 5
     n_records = 4
 
-    idf_py = np.log(max(1.0, (n_records + 0.5) / (doc_freq + 0.5)))
+    idf_py = np.log((n_records + 1.0) / (min(doc_freq, n_records) + 0.5))
     idf = numba_idf_bm25(doc_freq, n_records)
 
     assert idf_py == approx(idf)
@@ -500,14 +499,13 @@ def test_bm25_weights_use_temperature_and_document_length(tmp_path):
 
     doc_len = sum(counts)
     length_norm = 1.2 * (1.0 - 0.75 + 0.75 * (doc_len / 5.0))
-    idf_a = np.log(max(1.0, (4 + 0.5) / (1 + 0.5)))
-    idf_b = np.log(max(1.0, (4 + 0.5) / (2 + 0.5)))
+    idf_a = np.log((4 + 1.0) / (min(1, 4) + 0.5))
+    idf_b = np.log((4 + 1.0) / (min(2, 4) + 0.5))
     tf = 4 ** (1.0 / 2.0)
-    k1_plus_1 = 1.2 + 1.0
 
     expected = [
-        idf_a * tf * k1_plus_1 / (tf + length_norm),
-        idf_b * tf * k1_plus_1 / (tf + length_norm),
+        idf_a * tf / (tf + length_norm),
+        idf_b * tf / (tf + length_norm),
     ]
 
     assert [feature for feature, _ in weights] == features
@@ -521,17 +519,16 @@ def test_bm25_document_length_normalization(tmp_path):
     short = embedder.filter_reweight_features([b"a"], [1])
     long = embedder.filter_reweight_features([b"a", b"b"], [1, 5])
 
-    idf = np.log(max(1.0, (4 + 0.5) / (1 + 0.5)))
-    k1_plus_1 = 1.2 + 1.0
+    idf = np.log((4 + 1.0) / (min(1, 4) + 0.5))
 
     short_norm = 1.2 * (1.0 - 0.75 + 0.75 * (1.0 / 5.0))
     long_norm = 1.2 * (1.0 - 0.75 + 0.75 * (6.0 / 5.0))
 
     assert short[0][1] == approx(
-        idf * 1.0 * k1_plus_1 / (1.0 + short_norm)
+        idf * 1.0  / (1.0 + short_norm)
     )
     assert long[0][1] == approx(
-        idf * 1.0 * k1_plus_1 / (1.0 + long_norm)
+        idf * 1.0 / (1.0 + long_norm)
     )
     assert long[0][1] < short[0][1]
 
