@@ -53,6 +53,26 @@ def numba_idf(doc_freq, n_records):
     return idf
 
 
+@njit(float32(float32, float32))
+def numba_idf_bm25(doc_freq, n_records):
+    """
+    Numba function to calculate the idf value for a ``doc_freq`` following BM25 formula
+
+    Parameters
+    ----------
+    doc_freq : float32
+        Number of records that contain this particular feature.
+    n_records : float32
+        Total number of records in the data set.
+
+    Returns
+    -------
+    float32
+    """
+    idf = np.log(max(float32(1.0), (n_records + float32(0.5)) / (doc_freq + float32(0.5))))
+    return idf
+
+
 class TFVectorizer:
     """
     Calculate a Term-Frequency vector representation by first using sklearn's
@@ -463,3 +483,219 @@ class TFIDFVectorizer(TFVectorizer):
             The inverse document frequency
         """
         return numba_idf(doc_freq, self.cms.n_records())
+
+
+class BM25Vectorizer(TFVectorizer):
+    """
+    Randomly project records using BM25 scoring by first applying a high-dimensional
+    feature hasher to create a sparse vector representation and then applying random
+    projection to a dense embedding dimension. Follows the version implemented in
+    Lucene and OpenElastic. See https://docs.opensearch.org/latest/search-plugins/keyword-search/#important-changes-to-bm25-scoring-in-opensearch-30
+
+    BM25 formula:
+    .. math::
+
+        bm25 = idf * tf / (tf + k1 * (1-b + b* (doc_len / avg_doc_len)))
+
+    where idf uses the same formula as TFIDFVectorizer.
+
+    Parameters
+    ----------
+    d : int
+        Dimension of the dense vector output. Gets converted to multiple of 64 if
+        not already.
+    cms_file : str | Path
+        Filename of a saved count-min sketch for document frequency estimates.
+    k1: float, optional
+        Controls term frequency saturation. Typical values: 1.2-2.0. Default is 1.1.
+    b: float, optional
+        Controls document length normalization. Range [0, 1]. Default is 0.75.
+    hash_dim : int, optional
+        Sparse vector dimension for FeatureHasher. Default is 2**31 - 1.
+    minDF : int, optional
+        Miminum document frequency for features to be included. Default is 1.
+    maxDF: int, optional
+        Maximum document frequency for features to be included. Default is 2**32 - 1.
+    temperature : float, optional
+        Option to reshape the term frequency vector by raising each count to
+        (1/temperature). Using a value above 1.0 flattens the values relative to
+        each other. Using a value below 1.0 sharpens the contrast of values
+        relative to each other.
+    min_n_features : int, optional
+        Minimum number of features required to create a vector. Default is 1.
+    min_n_observations : int, optional
+        Minimum total observations required to create a vector. Default is 1.
+    filter : str, optional
+        Bloom filter file for feature filtering. Default is None.
+    filter_out : bool, optional
+        Whether to exclude (True) or include (False) filtered features. Default is True.
+
+    Attributes
+    ----------
+    k1: float
+        Term frequency saturation parameter.
+    b: float
+        Document length normalization parameter.
+    avg_doc_len: float
+        Average document length across all records. Computed from the count-min sketch.
+    """
+
+    def __init__(
+        self,
+        d: int,
+        cms_file: Union[str, Path],
+        *,
+        k1: float = 1.2,
+        b: float = 0.75,
+        hash_dim: int = 2**31 - 1,
+        minDF: int = 1,
+        maxDF: int = 2**32 - 1,
+        temperature: float = 1.0,
+        min_n_features: int = 1,
+        min_n_observations: int = 1,
+        filter: str = None,
+        filter_out: bool = True,
+    ):
+        """
+        Initialize a BM25 vectorizer.
+
+        Parameters
+        ----------
+        d : int
+            Dimension of the dense vector output. Gets converted to multiple of 64 if
+            not already.
+        cms_file : str | Path
+            Filename of a saved count-min sketch for document frequency estimates.
+        k1: float, optional
+            Controls term frequency saturation. Typical values: 1.2-2.0. Default is 1.2.
+        b: float, optional
+            Controls document length normalization. Range [0, 1]. Default is 0.75.
+        hash_dim : int, optional
+            Sparse vector dimension for FeatureHasher. Default is 2**31 - 1.
+        temperature : float, optional
+            Option to reshape the term frequency vector by raising each count to
+            (1/temperature). Using a value above 1.0 flattens the values relative to
+            each other. Using a value below 1.0 sharpens the contrast of values
+            relative to each other.
+        minDF : int, optional
+            Miminum document frequency for features to be included. Default is 1.
+        maxDF: int, optional
+            Maximum document frequency for features to be included. Default is 2**32 - 1.
+        min_n_features : int, optional
+            Minimum number of features required to create a vector. Default is 1.
+        min_n_observations : int, optional
+            Minimum total observations required to create a vector. Default is 1.
+        filter : str, optional
+            Bloom filter file for feature filtering. Default is None.
+        filter_out : bool, optional
+            Whether to exclude (True) or include (False) filtered features. Default is True.
+        """
+        super(BM25Vectorizer, self).__init__(
+            d,
+            cms_file=cms_file,
+            hash_dim=hash_dim,
+            minDF=minDF,
+            maxDF=maxDF,
+            temperature=temperature,
+            min_n_features=min_n_features,
+            min_n_observations=min_n_observations,
+            filter=filter,
+            filter_out=filter_out,
+        )
+        assert 1.2 <= k1 <= 2.0, f"{k1=:} must be in range [1.2, 2.0]"
+        assert 0.0 <= b <= 1.0, f"{b=:} must be in range [0.0, 1.0]"
+        assert (
+            self.cms.n_records() > 0
+        ), "Count-min sketch must have record count to compute avg_doc_len"
+        assert self.cms.n_added() > self.cms.n_records(), "Avg doc length must be > 1"
+
+        self.k1 = k1
+        self.b = b
+        self.avg_doc_len = self.cms.n_added() / self.cms.n_records()
+
+    def _idf(self, doc_freq: float) -> float:
+        """
+        Return the inverse document frequency given ``doc_freq`` using BM25 formula.
+
+        .. math::
+
+            idf = \log((N + 0.5) / (doc\_freq + 0.5))
+
+        Parameters
+        ----------
+        doc_freq : float
+            Document frequency
+
+        Returns
+        -------
+        idf : float
+            Inverse document frequency
+        """
+        return numba_idf_bm25(doc_freq, self.cms.n_records())
+
+    def filter_reweight_features(
+        self, features: List[bytes], counts: List[int]
+    ) -> List[Tuple[bytes, float]]:
+        """
+        Filter features and compute BM25 weights.
+
+        The BM25 score for each feature is:
+            idf * tf / (tf + k1 * (1 - b + b * (doc_len / avg_doc_len)))
+
+        Filter the features accordingly and reweight the associated counts. The counts
+        are scaled by raising them to :math:`1/temperature` and then multiplied by the
+        ``idf`` value.
+
+        Features will be filtered out if their document frequency is not within
+        [``minDF``, ``maxDF``] and if a ``filter`` is provided during initialization.
+        Only those features that pass the filters will contribute to the final vector.
+
+        After filtering, a final check is done to ensure that there are at least
+        ``min_n_features`` features remaining and that there are at least
+        ``min_n_observations`` observations of those features. Otherwise an empty list
+        is returned.
+
+        Parameters
+        ----------
+        features : List[bytes]
+            List of the individual features. These will be hashed by the FeatureHasher
+            to turn into a sparse vector representation
+        counts : List[int]
+            Number of times that feature is present in a given record.
+
+        Returns
+        ------
+        List[Tuple[bytes, float]]
+        """
+        values = np.array(counts) ** self.one_over_temp
+        doc_len = sum(counts)  # Total number of observations in the document
+
+        # Document length normalization factor
+        length_norm = self.k1 * (1.0 - self.b + self.b * (doc_len / self.avg_doc_len))
+        k1_plus_1 = self.k1 + 1.0
+
+        features_values = []
+        n_features = 0
+        n_observations = 0
+        for i in range(len(features)):
+            f = features[i]
+            tf = values[i]
+            doc_freq = self.cms[f]
+
+            # Apply filters
+            if ((f in self.filter) != self.filter_out) and (
+                self.minDF <= doc_freq and doc_freq <= self.maxDF
+            ):
+                # Compute BM25 score
+                bm25_score = self._idf(doc_freq) * tf * k1_plus_1 / (tf + length_norm)
+                features_values.append((f, bm25_score))
+                n_features += 1
+                n_observations += counts[i]
+
+        if (
+            n_features >= self.min_n_features
+            and n_observations >= self.min_n_observations
+        ):
+            return features_values
+        else:
+            return []
