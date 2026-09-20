@@ -524,18 +524,13 @@ def test_bm25_document_length_normalization(tmp_path):
     short_norm = 1.2 * (1.0 - 0.75 + 0.75 * (1.0 / 5.0))
     long_norm = 1.2 * (1.0 - 0.75 + 0.75 * (6.0 / 5.0))
 
-    assert short[0][1] == approx(
-        idf * 1.0  / (1.0 + short_norm)
-    )
-    assert long[0][1] == approx(
-        idf * 1.0 / (1.0 + long_norm)
-    )
+    assert short[0][1] == approx(idf * 1.0 / (1.0 + short_norm))
+    assert long[0][1] == approx(idf * 1.0 / (1.0 + long_norm))
     assert long[0][1] < short[0][1]
 
-
-    #assert short[0][1] == approx(idf / (1.0 + short_norm))
-    #assert long[0][1] == approx(idf / (1.0 + long_norm))
-    #assert long[0][1] < short[0][1]
+    # assert short[0][1] == approx(idf / (1.0 + short_norm))
+    # assert long[0][1] == approx(idf / (1.0 + long_norm))
+    # assert long[0][1] < short[0][1]
 
 
 def test_bm25_vectorization(tmp_path, d: int = 64):

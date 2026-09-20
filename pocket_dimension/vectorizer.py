@@ -70,7 +70,7 @@ def numba_idf_bm25(doc_freq, n_records):
     -------
     float32
     """
-    idf = np.log((n_records + float32(1.0)) / (min(n_records,doc_freq) + float32(0.5)))
+    idf = np.log((n_records + float32(1.0)) / (min(n_records, doc_freq) + float32(0.5)))
     return idf
 
 
