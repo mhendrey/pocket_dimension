@@ -1,6 +1,6 @@
 [project]
 name = "pocket_dimension"
-version = "0.2.0"
+version = "0.3.0"
 description = "Memory-efficient, dense, random projection of sparse vectors."
 readme = "README.rst"
 authors = [{name = "Matthew Hendrey", email = "matthew.hendrey@gmail.com"}]
@@ -24,6 +24,8 @@ dev = [
     "black>=25.12.0",
     "ipython>=9.8.0",
     "pytest>=9.0.2",
+    "sphinx",
+    "sphinx-rtd-theme>=1.0.0",
 ]
 
 [tool.setuptools]

@@ -11,8 +11,10 @@ Modules
 Pocket Dimension
 ----------------
 
-Contains the Numba implementation of the random projection function and the TFVectorizer and
-TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors into dense vectors.
+Contains the Numba implementation of the random projection function and the TFVectorizer,
+TFIDFVectorizer, and BM25Vectorizer classes that convert sparse term-weighted records into
+dense vectors. The vectorizers also support count-min sketch inputs via ``cms_file``, either
+from disk or from an already instantiated sketch object.
 
 .. toctree::
    :maxdepth: 2

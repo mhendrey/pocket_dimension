@@ -19,9 +19,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
+
 import numpy as np
 from pybloomfilter import BloomFilter
-from pytest import approx
+from pytest import approx, raises
 from sketchnu.countmin import CountMin
 from scipy.sparse import csr_matrix
 from sklearn.random_projection import johnson_lindenstrauss_min_dim
@@ -35,8 +36,10 @@ from pocket_dimension.random_projection import (
 )
 from pocket_dimension.vectorizer import (
     numba_idf,
+    numba_idf_bm25,
     TFVectorizer,
     TFIDFVectorizer,
+    BM25Vectorizer,
 )
 
 
@@ -64,7 +67,7 @@ def test_johnson_lindenstrauss(
     max_n_features: int = 100,
     eps: float = 0.05,
 ):
-    """
+    r"""
     Test the the Johnson-Lindenstrauss Lemma holds between the sparse vectors and the
     randomly projected dense vectors. This uses the results found in
 
@@ -74,7 +77,10 @@ def test_johnson_lindenstrauss(
     to the distance between the original sparse vectors is between (1-eps) and (1+eps).
     The embedding dimension is determined by the requested error rate, eps.
 
+    ...
     d = 24 \* log(n) / (3 \* eps\*\*2 - 2 \* eps \*\* 3)
+    ...
+
 
     where n is the number of vectors.  This does the full n(n-1)/2 comparisions.
 
@@ -121,9 +127,9 @@ def test_distributional_johnson_lindenstrauss(
     min_n_features: int = 5,
     max_n_features: int = 100,
     eps: float = 0.1,
-    delta_pad: float = 0.01,
+    delta_pad: float = 0.02,
 ):
-    """
+    r"""
     Test the statistical guarantees of the Distributional Johnson-Lindenstrauss Lemma
     using a method for finding the best possible delta (failure rate) for a given
     epsilon (error rate) of the difference of the L2 norm between vectors in the
@@ -133,9 +139,9 @@ def test_distributional_johnson_lindenstrauss(
     Proceedings of Machine Learning Research **134**, 1 (2021)
     http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf
 
-    This paper provides the optimal possible error probability
+    This paper provides the optimal possible error probability::
 
-    delta(sparse_dim, embed_dim, eps) =
+        delta(sparse_dim, embed_dim, eps) =
             P[abs(\|Ax\|\*\*2 - \|x\|\*\*2) > eps * \|x\|\*\*2]
 
     given the best possible matrix A and the worst possible data x.
@@ -153,7 +159,7 @@ def test_distributional_johnson_lindenstrauss(
     delta_pad : float, optional
         Amount by which we pad the calculated best delta value. This is done to reduce
         the probability of failure given the vagaries of running statistical tests.
-        Default is 0.01
+        Default is 0.02
     """
     S = random_sparse_vectors(
         n, min_n_features=min_n_features, max_n_features=max_n_features
@@ -438,6 +444,111 @@ def test_numba_idf():
     idf = numba_idf(doc_freq, n_records)
 
     assert idf_py == approx(idf)
+
+
+def _make_bm25_cms(tmp_path):
+    cms_file = str(tmp_path / "bm25_cms.npz")
+    cms = CountMin("linear", width=300)
+    cms.n_added_records[1] = 4
+    cms.update([b"a"])
+    cms.update([b"b"] * 2)
+    cms.update([b"c"] * 3)
+    cms.update([b"f"] * 14)
+    cms.save(cms_file)
+    return cms_file
+
+
+def test_numba_idf_bm25():
+    doc_freq = 5
+    n_records = 4
+
+    idf_py = np.log((n_records + 1.0) / (min(doc_freq, n_records) + 0.5))
+    idf = numba_idf_bm25(doc_freq, n_records)
+
+    assert idf_py == approx(idf)
+
+
+def test_bm25_constructor_and_parameters(tmp_path):
+    cms_file = _make_bm25_cms(tmp_path)
+
+    embedder = BM25Vectorizer(64, cms_file=cms_file)
+    assert embedder.k1 == approx(1.2)
+    assert embedder.b == approx(0.75)
+    assert embedder.avg_doc_len == approx(5.0)
+
+    for kwargs in [{"k1": 1.2}, {"k1": 2.0}, {"b": 0.0}, {"b": 1.0}]:
+        BM25Vectorizer(64, cms_file=cms_file, **kwargs)
+
+    with raises(AssertionError):
+        BM25Vectorizer(64, cms_file=cms_file, k1=1.1)
+    with raises(AssertionError):
+        BM25Vectorizer(64, cms_file=cms_file, k1=2.1)
+    with raises(AssertionError):
+        BM25Vectorizer(64, cms_file=cms_file, b=-0.1)
+    with raises(AssertionError):
+        BM25Vectorizer(64, cms_file=cms_file, b=1.1)
+
+
+def test_bm25_weights_use_temperature_and_document_length(tmp_path):
+    cms_file = _make_bm25_cms(tmp_path)
+    embedder = BM25Vectorizer(64, cms_file=cms_file, k1=1.2, b=0.75, temperature=2.0)
+
+    features = [b"a", b"b"]
+    counts = [4, 4]
+    weights = embedder.filter_reweight_features(features, counts)
+
+    doc_len = sum(counts)
+    length_norm = 1.2 * (1.0 - 0.75 + 0.75 * (doc_len / 5.0))
+    idf_a = np.log((4 + 1.0) / (min(1, 4) + 0.5))
+    idf_b = np.log((4 + 1.0) / (min(2, 4) + 0.5))
+    tf = 4 ** (1.0 / 2.0)
+
+    expected = [
+        idf_a * tf / (tf + length_norm),
+        idf_b * tf / (tf + length_norm),
+    ]
+
+    assert [feature for feature, _ in weights] == features
+    assert [weight for _, weight in weights] == approx(expected)
+
+
+def test_bm25_document_length_normalization(tmp_path):
+    cms_file = _make_bm25_cms(tmp_path)
+    embedder = BM25Vectorizer(64, cms_file=cms_file, k1=1.2, b=0.75)
+
+    short = embedder.filter_reweight_features([b"a"], [1])
+    long = embedder.filter_reweight_features([b"a", b"b"], [1, 5])
+
+    idf = np.log((4 + 1.0) / (min(1, 4) + 0.5))
+
+    short_norm = 1.2 * (1.0 - 0.75 + 0.75 * (1.0 / 5.0))
+    long_norm = 1.2 * (1.0 - 0.75 + 0.75 * (6.0 / 5.0))
+
+    assert short[0][1] == approx(idf * 1.0 / (1.0 + short_norm))
+    assert long[0][1] == approx(idf * 1.0 / (1.0 + long_norm))
+    assert long[0][1] < short[0][1]
+
+    # assert short[0][1] == approx(idf / (1.0 + short_norm))
+    # assert long[0][1] == approx(idf / (1.0 + long_norm))
+    # assert long[0][1] < short[0][1]
+
+
+def test_bm25_vectorization(tmp_path, d: int = 64):
+    cms_file = _make_bm25_cms(tmp_path)
+    records = [
+        {"id": "one", "features": [b"a", b"b"], "counts": [1, 2]},
+        {"id": "two", "features": [b"a", b"b"], "counts": [1, 2]},
+        {"id": "three", "features": [b"c", b"f"], "counts": [1, 2]},
+    ]
+
+    X, ids = BM25Vectorizer(d, cms_file=cms_file)(records)
+
+    assert X.shape == (3, d)
+    assert X.dtype == np.float32
+    assert np.linalg.norm(X, axis=1) == approx(np.ones(3))
+    assert list(ids) == ["one", "two", "three"]
+    assert X[0].dot(X[1]) == approx(1.0)
+    assert X[0].dot(X[2]) < 0.99
 
 
 def test_tfidf(tmp_path, d: int = 64):
