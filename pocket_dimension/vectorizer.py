@@ -24,13 +24,14 @@ import numpy as np
 import logging
 from pathlib import Path
 from pybloomfilter import BloomFilter
-from sketchnu.countmin import load as load_cms, CountMin
+from sketchnu.countmin import load as load_cms, CountMinLinear
 from sklearn.feature_extraction import FeatureHasher
 from typing import Dict, Iterable, List, Tuple, Union
 
 from .random_projection import JustInTimeRandomProjection
 
 logger = logging.getLogger("pocket_dimension")
+CMSInput = Union[str, Path, CountMinLinear]
 
 
 @njit(float32(float32, float32))
@@ -74,7 +75,7 @@ def numba_idf_bm25(doc_freq, n_records):
 
 
 class TFVectorizer:
-    """
+    r"""
     Calculate a Term-Frequency vector representation by first using sklearn's
     FeatureHasher to create a high-dimensional, sparse vector representation.
     Then apply the JustInTimeRandomProjection to return a lower-dimensional
@@ -86,9 +87,12 @@ class TFVectorizer:
     d : int
         Dimension of the dense vector output. Rounded down to nearest multiple of 64 if
         not already
-    cms_file : str | Path, optional
-        Filename of a saved count-min sketch to use for filtering out features
-        whose document frequency falls outside of [minDF, maxDF]. Default is None
+    cms_file : str | Path | CountMinLinear, optional
+        A path to a saved count-min sketch or an already instantiated
+        ``CountMinLinear`` instance. ``CountMinLog16`` and ``CountMinLog8`` instances
+        are also accepted because they subclass ``CountMinLinear``. The sketch is used
+        to estimate document frequencies for filtering features by ``minDF`` and
+        ``maxDF``. Default is ``None``.
     hash_dim : int, optional
         Number of dimensions that features get hashed to for the sparse vector
         representation. Should have `hash_dim >> d`. Default is the largest
@@ -154,7 +158,7 @@ class TFVectorizer:
         self,
         d: int,
         *,
-        cms_file: Union[str, Path] = None,
+        cms_file: CMSInput = None,
         hash_dim: int = 2**31 - 1,
         minDF: int = 1,
         maxDF: int = 2**32 - 1,
@@ -164,7 +168,7 @@ class TFVectorizer:
         filter: str = None,
         filter_out: bool = True,
     ):
-        """
+        r"""
         Initialize the a Term-Frequency vectorizer. All optional parameters must be
         passed as keyword arguments. That is, everything but the embedding dimension
         `d`.
@@ -174,9 +178,12 @@ class TFVectorizer:
         d : int
             Dimension of the dense vector output. Gets converted to multiple of 64 if
             not already
-        cms_file : str | Path, optional
-            Filename of a saved count-min sketch to use for filtering out features
-            whose document frequency falls outside of [minDF, maxDF]. Default is None
+        cms_file : str | Path | CountMinLinear, optional
+            A path to a saved count-min sketch or an already instantiated
+            ``CountMinLinear`` instance. ``CountMinLog16`` and ``CountMinLog8`` instances
+            are also accepted because they subclass ``CountMinLinear``. The sketch is used
+            to estimate document frequencies for filtering features by ``minDF`` and
+            ``maxDF``. Default is ``None``.
         hash_dim : int, optional
             Number of dimensions that features get hashed to for the sparse vector
             representation. Should have `hash_dim >> d`. Default is the largest
@@ -240,10 +247,17 @@ class TFVectorizer:
             raise ValueError(f"filter must be str | None. You gave {type(filter)}")
 
         if cms_file is None:
-            self.cms = CountMin(width=1, depth=1, cms_type="linear")
+            self.cms = CountMinLinear(width=1, depth=1)
             self.cms.add(b"anything")
         elif isinstance(cms_file, (str, Path)):
             self.cms = load_cms(cms_file)
+        elif isinstance(cms_file, CountMinLinear):
+            self.cms = cms_file
+        else:
+            raise TypeError(
+                "cms_file must be None, a str/Path to a saved count-min sketch, or an instance of"
+                f"CountMinLinear/CountMinLog16/CountMinLog8. You gave {type(cms_file)}"
+            )
 
     def __call__(self, records: Iterable[Dict]) -> Tuple[np.ndarray, np.ndarray]:
         """
@@ -380,7 +394,7 @@ class TFVectorizer:
 
 
 class TFIDFVectorizer(TFVectorizer):
-    """
+    r"""
     Randomly project records by first applying a high-dimensional feature hasher
     to create a sparse vector representation of the tf-idf and then applying the
     random projection to a dense embedding dimension.
@@ -394,7 +408,7 @@ class TFIDFVectorizer(TFVectorizer):
     def __init__(
         self,
         d: int,
-        cms_file: Union[str, Path],
+        cms_file: CMSInput,
         *,
         hash_dim: int = 2**31 - 1,
         minDF: int = 1,
@@ -405,7 +419,7 @@ class TFIDFVectorizer(TFVectorizer):
         filter: str = None,
         filter_out: bool = True,
     ):
-        """
+        r"""
         Initialize a Term-Frequency, Inverse Document-Frequency vectorizer. All
         optional parameters must be passed as keyword arguments. That is, everything
         but `d` and `cms_file`.
@@ -415,9 +429,12 @@ class TFIDFVectorizer(TFVectorizer):
         d : int
             Dimension of the dense vector output. Gets converted to multiple of 64 if
             not already
-        cms_file : str | Path
-            Filename of a saved count-min sketch to use for filtering out features
-            whose document frequency falls outside of [minDF, maxDF]. Default is None
+        cms_file : str | Path | CountMinLinear
+            A path to a saved count-min sketch or an already instantiated
+            ``CountMinLinear`` instance. ``CountMinLog16`` and ``CountMinLog8`` instances
+            are also accepted because they subclass ``CountMinLinear``. The sketch provides
+            document-frequency estimates and is used for filtering features by ``minDF``
+            and ``maxDF``.
         hash_dim : int, optional
             Number of dimensions that features get hashed to for the sparse vector
             representation. Should have `hash_dim >> d`. Default is the largest
@@ -462,7 +479,7 @@ class TFIDFVectorizer(TFVectorizer):
         )
 
     def _idf(self, doc_freq: float) -> float:
-        """
+        r"""
         Return the inverse document frequency given ``doc_freq``. To speed things up
         this calls a numba function.
 
@@ -504,8 +521,12 @@ class BM25Vectorizer(TFVectorizer):
     d : int
         Dimension of the dense vector output. Gets converted to multiple of 64 if
         not already.
-    cms_file : str | Path
-        Filename of a saved count-min sketch for document frequency estimates.
+    cms_file : str | Path | CountMinLinear
+        A path to a saved count-min sketch or an already instantiated
+        ``CountMinLinear`` instance. ``CountMinLog16`` and ``CountMinLog8`` instances
+        are also accepted because they subclass ``CountMinLinear``. The sketch provides
+        document-frequency estimates and is used for filtering features by ``minDF``
+        and ``maxDF``.
     k1: float, optional
         Controls term frequency saturation. Typical values: 1.2-2.0. Default is 1.1.
     b: float, optional
@@ -543,7 +564,7 @@ class BM25Vectorizer(TFVectorizer):
     def __init__(
         self,
         d: int,
-        cms_file: Union[str, Path],
+        cms_file: CMSInput,
         *,
         k1: float = 1.2,
         b: float = 0.75,
@@ -564,8 +585,12 @@ class BM25Vectorizer(TFVectorizer):
         d : int
             Dimension of the dense vector output. Gets converted to multiple of 64 if
             not already.
-        cms_file : str | Path
-            Filename of a saved count-min sketch for document frequency estimates.
+        cms_file : str | Path | CountMinLinear
+            A path to a saved count-min sketch or an already instantiated
+            ``CountMinLinear`` instance. ``CountMinLog16`` and ``CountMinLog8`` instances
+            are also accepted because they subclass ``CountMinLinear``. The sketch provides
+            document-frequency estimates and is used for filtering features by ``minDF``
+            and ``maxDF``.
         k1: float, optional
             Controls term frequency saturation. Typical values: 1.2-2.0. Default is 1.2.
         b: float, optional
@@ -578,7 +603,7 @@ class BM25Vectorizer(TFVectorizer):
             each other. Using a value below 1.0 sharpens the contrast of values
             relative to each other.
         minDF : int, optional
-            Miminum document frequency for features to be included. Default is 1.
+            Mininum document frequency for features to be included. Default is 1.
         maxDF: int, optional
             Maximum document frequency for features to be included. Default is 2**32 - 1.
         min_n_features : int, optional
@@ -614,7 +639,7 @@ class BM25Vectorizer(TFVectorizer):
         self.avg_doc_len = self.cms.n_added() / self.cms.n_records()
 
     def _idf(self, doc_freq: float) -> float:
-        """
+        r"""
         Return the inverse document frequency given ``doc_freq`` using BM25 formula.
 
         .. math::
