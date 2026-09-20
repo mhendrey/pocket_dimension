@@ -5,16 +5,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.2.0 documentation</title>
+  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=938c9ccc"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=e259d695"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -63,7 +63,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#pocket-dimension-vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.BM25Vectorizer"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.BM25Vectorizer.k1"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.k1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.BM25Vectorizer.b"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.b</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.avg_doc_len</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.filter_reweight_features()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.TFVectorizer.d"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.d</span></code></a></li>
@@ -83,13 +90,19 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#pocket_dimension.vectorizer.numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">numba_idf_bm25()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_bm25_constructor_and_parameters"><code class="docutils literal notranslate"><span class="pre">test_bm25_constructor_and_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_bm25_document_length_normalization"><code class="docutils literal notranslate"><span class="pre">test_bm25_document_length_normalization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_bm25_vectorization"><code class="docutils literal notranslate"><span class="pre">test_bm25_vectorization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length"><code class="docutils literal notranslate"><span class="pre">test_bm25_weights_use_temperature_and_document_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">test_numba_idf_bm25()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
@@ -136,7 +149,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pocket_dimension.random_projection</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors</span>
 <span class="sd">and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document</span>
 <span class="sd">Frequency (TFIDF) data.</span>
@@ -155,7 +168,7 @@
 
 <span class="sd">You should have received a copy of the GNU General Public License</span>
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span><span class="p">,</span> <span class="n">prange</span><span class="p">,</span> <span class="n">float32</span><span class="p">,</span> <span class="n">int64</span><span class="p">,</span> <span class="n">uint64</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -176,7 +189,7 @@
 <a class="viewcode-back" href="../../modules.html#pocket_dimension.random_projection.splitmix64">[docs]</a>
 <span class="nd">@njit</span><span class="p">(</span><span class="n">uint64</span><span class="p">(</span><span class="n">uint64</span><span class="p">))</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">splitmix64</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fast, simple function for taking an integer and returning a random number. Function</span>
 <span class="sd">    used in Java random number generator.</span>
 
@@ -187,7 +200,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    uint64</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="n">uint64</span><span class="p">(</span><span class="mh">0x9E3779B97F4A7C15</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">^</span> <span class="p">(</span><span class="n">z</span> <span class="o">&gt;&gt;</span> <span class="n">uint64</span><span class="p">(</span><span class="mi">30</span><span class="p">)))</span> <span class="o">*</span> <span class="n">uint64</span><span class="p">(</span><span class="mh">0xBF58476D1CE4E5B9</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">^</span> <span class="p">(</span><span class="n">z</span> <span class="o">&gt;&gt;</span> <span class="n">uint64</span><span class="p">(</span><span class="mi">27</span><span class="p">)))</span> <span class="o">*</span> <span class="n">uint64</span><span class="p">(</span><span class="mh">0x94D049BB133111EB</span><span class="p">)</span>
@@ -202,7 +215,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">random_projection</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">indptr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Randomly project a sparse matrix (standard CSR representation) to a dense vectors</span>
 <span class="sd">    by effectively multiplying by a random matrix whose elements are</span>
 <span class="sd">    :math:`\pm 1 / \sqrt{d}`. The projection matrix is never stored in memory. Instead</span>
@@ -232,10 +245,10 @@
 <span class="sd">    X : np.ndarray, shape=(n_rows, d), dtype=float32</span>
 <span class="sd">        Dense 2-d array containing the randomly projected dense vectors for each row of</span>
 <span class="sd">        the input sparse matrix.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;Shape of data and indices do not match&quot;</span>
-    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;data and indices must be 1-d&quot;</span>
-    <span class="k">assert</span> <span class="n">indptr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;indptr must be 1-d&quot;</span>
+<span class="sd">    """</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"Shape of data and indices do not match"</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"data and indices must be 1-d"</span>
+    <span class="k">assert</span> <span class="n">indptr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"indptr must be 1-d"</span>
 
     <span class="n">d</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">d</span> <span class="o">//</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)</span>
     <span class="c1"># This preserves the magnitude of the vector</span>
@@ -269,7 +282,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">distributional_johnson_lindenstrauss_optimal_delta</span><span class="p">(</span>
     <span class="n">sparse_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Algorithm to find the optimal failure rate, delta, for a given ``eps`` (error rate),</span>
 <span class="sd">    ``sparse_dim``, and ``n_components`` (embedding dimension) for the Distributional</span>
 <span class="sd">    Johnson-Lindenstrauss Lemma which is a different formulation of the problem.</span>
@@ -302,7 +315,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    delta : float</span>
 <span class="sd">        The best probability of failure that you can expect</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">n_components</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">sparse_dim</span> <span class="o">-</span> <span class="n">n_components</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">z0</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
@@ -312,7 +325,7 @@
     <span class="n">jac</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">betainc_jac</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
         <span class="mf">1.0</span> <span class="o">-</span> <span class="n">eps</span>
     <span class="p">)</span> <span class="o">*</span> <span class="n">betainc_jac</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">z0</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;Newton-CG&quot;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">z0</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"Newton-CG"</span><span class="p">)</span>
     <span class="n">scale</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">out</span><span class="o">.</span><span class="n">fun</span>
 
     <span class="c1"># If you do sparse_dim = 2**31 - 1 this returns a numpy array for some reason</span>
@@ -335,7 +348,7 @@
     <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">csr_matrix</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Randomly generate sparse vectors for testing</span>
 
 <span class="sd">    Parameters</span>
@@ -357,13 +370,13 @@
 <span class="sd">    -------</span>
 <span class="sd">    csr_matrix</span>
 <span class="sd">        Shape is (n_samples, sparse_dim)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">sparse_dim</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sparse_dim</span><span class="si">=:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> must be below 2**31 due to csr_matrix limits&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sparse_dim</span><span class="si">=:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> must be below 2**31 due to csr_matrix limits"</span>
         <span class="p">)</span>
     <span class="n">n_features</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">min_n_features</span><span class="p">,</span> <span class="n">max_n_features</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_features</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -371,7 +384,7 @@
     <span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sparse_dim</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_features</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     <span class="n">indptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">n_features</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
-    <span class="c1"># Maybe normalize, but make sure we don&#39;t have repeat indices in a given vector</span>
+    <span class="c1"># Maybe normalize, but make sure we don't have repeat indices in a given vector</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
         <span class="n">start_idx</span> <span class="o">=</span> <span class="n">indptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">end_idx</span> <span class="o">=</span> <span class="n">indptr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
@@ -391,7 +404,7 @@
 <div class="viewcode-block" id="JustInTimeRandomProjection">
 <a class="viewcode-back" href="../../modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">JustInTimeRandomProjection</span><span class="p">(</span><span class="n">BaseRandomProjection</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Reduce the dimensionality of sparse vectors using a dense random projection matrix</span>
 <span class="sd">    in a memory-efficient way.</span>
 
@@ -413,11 +426,11 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    n_components : int or &#39;auto&#39;, default = &#39;auto&#39;</span>
+<span class="sd">    n_components : int or 'auto', default = 'auto'</span>
 <span class="sd">        Dimensionality of the target projection space. If not a multiple of 64, then</span>
 <span class="sd">        it will be rounded down to the nearest multiple of 64.</span>
 
-<span class="sd">        If &#39;auto&#39;, then it will pick a dimensionality that satisfies the</span>
+<span class="sd">        If 'auto', then it will pick a dimensionality that satisfies the</span>
 <span class="sd">        Johnson-Lindenstrauss Lemma based upon the ``eps`` parameter. The</span>
 <span class="sd">        dimensionality will then be rounded up to the nearest multiple of 64</span>
 <span class="sd">        to ensure you satisfy the conditions in the lemma.</span>
@@ -426,7 +439,7 @@
 <span class="sd">        dimensionality.</span>
 <span class="sd">    eps : float, default = 0.1</span>
 <span class="sd">        Parameter to control the quality of the embedding according to the</span>
-<span class="sd">        Johnson-Lindenstrauss Lemma. This is used if ``n_components`` is &#39;auto&#39;.</span>
+<span class="sd">        Johnson-Lindenstrauss Lemma. This is used if ``n_components`` is 'auto'.</span>
 <span class="sd">        This represents the error rate between distances in the sparse dimension</span>
 <span class="sd">        and the resulting lower embedding dimension. Smaller values of ``eps``</span>
 <span class="sd">        give larger values of ``n_components``.</span>
@@ -458,9 +471,9 @@
 <span class="sd">        X_new.shape</span>
 <span class="sd">        # (25, 64)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
             <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span>
@@ -472,22 +485,22 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">!=</span> <span class="n">n_components</span><span class="p">:</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                    <span class="s2">&quot;The number of components has been round down to the nearest &quot;</span>
-                    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;multiple of 64. It&#39;s been set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="s2">"The number of components has been round down to the nearest "</span>
+                    <span class="o">+</span> <span class="sa">f</span><span class="s2">"multiple of 64. It's been set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">!=</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">!=</span> <span class="s2">"auto"</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_components</span><span class="si">=:}</span><span class="s2">. It must either be a positive integer or &#39;auto&#39;&quot;</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n_components</span><span class="si">=:}</span><span class="s2">. It must either be a positive integer or 'auto'"</span>
             <span class="p">)</span>
 
 <div class="viewcode-block" id="JustInTimeRandomProjection.fit">
 <a class="viewcode-back" href="../../modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection.fit">[docs]</a>
     <span class="nd">@_fit_context</span><span class="p">(</span><span class="n">prefer_skip_nested_validation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This is essential a no-op function since there is no need to generate a random</span>
 <span class="sd">        projection matrix. Instead, this is validating input data and if</span>
-<span class="sd">        ``n_components`` is &#39;auto&#39;, then it sets it according to the</span>
+<span class="sd">        ``n_components`` is 'auto', then it sets it according to the</span>
 <span class="sd">        Johnson-Lindenstrauss lemma limits based upon X.shape[1] and ``eps``.</span>
 
 <span class="sd">        Parameters</span>
@@ -501,13 +514,13 @@
 <span class="sd">        -------</span>
 <span class="sd">        self : object</span>
 <span class="sd">            JustInTimeRandomProjection class instance</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">validate_data</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">reset</span><span class="o">=</span><span class="kc">True</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s2">"csr"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">reset</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="s2">"auto"</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">=</span> <span class="n">johnson_lindenstrauss_min_dim</span><span class="p">(</span>
                 <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
             <span class="p">)</span>
@@ -515,15 +528,15 @@
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">&gt;</span> <span class="n">n_features</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;eps=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="si">:</span><span class="s2">f</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">n_samples</span><span class="si">=:}</span><span class="s2"> lead to a target dimension &quot;</span>
-                    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="si">}</span><span class="s2"> which is larger than the original space &quot;</span>
-                    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="n">n_features</span><span class="si">=:}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">"eps=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="si">:</span><span class="s2">f</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">n_samples</span><span class="si">=:}</span><span class="s2"> lead to a target dimension "</span>
+                    <span class="o">+</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="si">}</span><span class="s2"> which is larger than the original space "</span>
+                    <span class="o">+</span> <span class="sa">f</span><span class="s2">"with </span><span class="si">{</span><span class="n">n_features</span><span class="si">=:}</span><span class="s2">"</span>
                 <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">&gt;</span> <span class="n">n_features</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;The number of components is higher than the number of features: &quot;</span>
-                <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;n_features &lt; n_components (</span><span class="si">{</span><span class="n">n_features</span><span class="si">}</span><span class="s2"> &lt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="o">+</span> <span class="s2">&quot;The dimensionality of the problem will not be reduced.&quot;</span><span class="p">,</span>
+                <span class="s2">"The number of components is higher than the number of features: "</span>
+                <span class="o">+</span> <span class="sa">f</span><span class="s2">"n_features &lt; n_components (</span><span class="si">{</span><span class="n">n_features</span><span class="si">}</span><span class="s2"> &lt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="o">+</span> <span class="s2">"The dimensionality of the problem will not be reduced."</span><span class="p">,</span>
                 <span class="n">DataDimensionalityWarning</span><span class="p">,</span>
             <span class="p">)</span>
 
@@ -533,7 +546,7 @@
 <div class="viewcode-block" id="JustInTimeRandomProjection.transform">
 <a class="viewcode-back" href="../../modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">csr_matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Project the data using the just-in-time generated dense random projection</span>
 <span class="sd">        matrix.</span>
 
@@ -547,13 +560,13 @@
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Projected data of shape (n_samples, n_components)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">validate_data</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s2">"csr"</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">csr_matrix</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X must be a sparse csr_matrix. You gave </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"X must be a sparse csr_matrix. You gave </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="n">input_dtype</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span>
 
@@ -566,7 +579,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_make_random_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span> <span class="n">n_features</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This is an abstract method in the base class, so it must be overwritten, but</span>
 <span class="sd">        it is not need, so returning an empty numpy array.</span>
 
@@ -581,7 +594,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Empty array to conform to BaseRandomProjection, the parent class</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span></div>
 
 </pre></div>

@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.2.0 documentation</title>
+  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -67,7 +67,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#pocket-dimension-vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.vectorizer.BM25Vectorizer"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pocket_dimension.vectorizer.BM25Vectorizer.k1"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.k1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pocket_dimension.vectorizer.BM25Vectorizer.b"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.b</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.avg_doc_len</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.filter_reweight_features()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer.d"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.d</span></code></a></li>
@@ -87,13 +94,19 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pocket_dimension.vectorizer.numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">numba_idf_bm25()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_bm25_constructor_and_parameters"><code class="docutils literal notranslate"><span class="pre">test_bm25_constructor_and_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_bm25_document_length_normalization"><code class="docutils literal notranslate"><span class="pre">test_bm25_document_length_normalization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_bm25_vectorization"><code class="docutils literal notranslate"><span class="pre">test_bm25_vectorization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length"><code class="docutils literal notranslate"><span class="pre">test_bm25_weights_use_temperature_and_document_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">test_numba_idf_bm25()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
@@ -159,7 +172,7 @@ GNU General Public License for more details.</p>
 along with this program.  If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pocket_dimension.random_projection.JustInTimeRandomProjection">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pocket_dimension.random_projection.</span></span><span class="sig-name descname"><span class="pre">JustInTimeRandomProjection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/random_projection.html#JustInTimeRandomProjection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.random_projection.JustInTimeRandomProjection" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pocket_dimension.random_projection.</span></span><span class="sig-name descname"><span class="pre">JustInTimeRandomProjection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/random_projection.html#JustInTimeRandomProjection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.random_projection.JustInTimeRandomProjection" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRandomProjection</span></code></p>
 <p>Reduce the dimensionality of sparse vectors using a dense random projection matrix
 in a memory-efficient way.</p>
@@ -331,7 +344,7 @@ If you have just a single record, then indptr=[0, len(data)]</p></li>
 the input sparse matrix.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray, shape=(n_rows, d), dtype=float32</p>
+<dd class="field-odd"><p>np.ndarray, shape=(n_rows, <a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer.d" title="pocket_dimension.vectorizer.TFVectorizer.d">d</a>), dtype=float32</p>
 </dd>
 </dl>
 </dd></dl>
@@ -376,9 +389,12 @@ used in Java random number generator.</p>
 </dd></dl>
 
 </section>
-<section id="module-pocket_dimension.vectorizer">
-<span id="pocket-dimension-vectorizer"></span><h1>pocket_dimension.vectorizer<a class="headerlink" href="#module-pocket_dimension.vectorizer" title="Link to this heading"></a></h1>
-<p>Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors
+<section id="pocket-dimension-vectorizer">
+<h1>pocket_dimension.vectorizer<a class="headerlink" href="#pocket-dimension-vectorizer" title="Link to this heading"></a></h1>
+<p>The vectorizer module exposes <code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code>, <code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code>. Each accepts a count-min sketch through <code class="docutils literal notranslate"><span class="pre">cms_file</span></code>,
+which may be a path to a saved sketch or an already instantiated sketch object.</p>
+<p id="module-pocket_dimension.vectorizer">Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors
 and then applies this to Term Frequency (TF) and Term Frequency, Inverse Document
 Frequency (TFIDF) data.</p>
 <p>Copyright (C) 2022 Matthew Hendrey &amp; Brendan Murphy</p>
@@ -393,8 +409,115 @@ GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License
 along with this program.  If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="py class">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.BM25Vectorizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">BM25Vectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cms_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">CountMinLinear</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2147483647</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4294967295</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#BM25Vectorizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.BM25Vectorizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer" title="pocket_dimension.vectorizer.TFVectorizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a></p>
+<p>Randomly project records using BM25 scoring by first applying a high-dimensional
+feature hasher to create a sparse vector representation and then applying random
+projection to a dense embedding dimension. Follows the version implemented in
+Lucene and OpenElastic. See <a class="reference external" href="https://docs.opensearch.org/latest/search-plugins/keyword-search/#important-changes-to-bm25-scoring-in-opensearch-30">https://docs.opensearch.org/latest/search-plugins/keyword-search/#important-changes-to-bm25-scoring-in-opensearch-30</a></p>
+<p>BM25 formula:
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bm25</span> <span class="o">=</span> <span class="n">idf</span> <span class="o">*</span> <span class="n">tf</span> <span class="o">/</span> <span class="p">(</span><span class="n">tf</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span> <span class="p">(</span><span class="n">doc_len</span> <span class="o">/</span> <span class="n">avg_doc_len</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>where idf uses the same formula as TFIDFVectorizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of the dense vector output. Gets converted to multiple of 64 if
+not already.</p></li>
+<li><p><strong>cms_file</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>CountMinLinear</em>) – A path to a saved count-min sketch or an already instantiated
+<code class="docutils literal notranslate"><span class="pre">CountMinLinear</span></code> instance. <code class="docutils literal notranslate"><span class="pre">CountMinLog16</span></code> and <code class="docutils literal notranslate"><span class="pre">CountMinLog8</span></code> instances
+are also accepted because they subclass <code class="docutils literal notranslate"><span class="pre">CountMinLinear</span></code>. The sketch provides
+document-frequency estimates and is used for filtering features by <code class="docutils literal notranslate"><span class="pre">minDF</span></code>
+and <code class="docutils literal notranslate"><span class="pre">maxDF</span></code>.</p></li>
+<li><p><strong>k1</strong> (<em>float</em><em>, </em><em>optional</em>) – Controls term frequency saturation. Typical values: 1.2-2.0. Default is 1.1.</p></li>
+<li><p><strong>b</strong> (<em>float</em><em>, </em><em>optional</em>) – Controls document length normalization. Range [0, 1]. Default is 0.75.</p></li>
+<li><p><strong>hash_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Sparse vector dimension for FeatureHasher. Default is 2**31 - 1.</p></li>
+<li><p><strong>minDF</strong> (<em>int</em><em>, </em><em>optional</em>) – Miminum document frequency for features to be included. Default is 1.</p></li>
+<li><p><strong>maxDF</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum document frequency for features to be included. Default is 2**32 - 1.</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – Option to reshape the term frequency vector by raising each count to
+(1/temperature). Using a value above 1.0 flattens the values relative to
+each other. Using a value below 1.0 sharpens the contrast of values
+relative to each other.</p></li>
+<li><p><strong>min_n_features</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of features required to create a vector. Default is 1.</p></li>
+<li><p><strong>min_n_observations</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum total observations required to create a vector. Default is 1.</p></li>
+<li><p><strong>filter</strong> (<em>str</em><em>, </em><em>optional</em>) – Bloom filter file for feature filtering. Default is None.</p></li>
+<li><p><strong>filter_out</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to exclude (True) or include (False) filtered features. Default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.BM25Vectorizer.k1">
+<span class="sig-name descname"><span class="pre">k1</span></span><a class="headerlink" href="#pocket_dimension.vectorizer.BM25Vectorizer.k1" title="Link to this definition"></a></dt>
+<dd><p>Term frequency saturation parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.BM25Vectorizer.b">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pocket_dimension.vectorizer.BM25Vectorizer.b" title="Link to this definition"></a></dt>
+<dd><p>Document length normalization parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len">
+<span class="sig-name descname"><span class="pre">avg_doc_len</span></span><a class="headerlink" href="#pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len" title="Link to this definition"></a></dt>
+<dd><p>Average document length across all records. Computed from the count-min sketch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features">
+<span class="sig-name descname"><span class="pre">filter_reweight_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#BM25Vectorizer.filter_reweight_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features" title="Link to this definition"></a></dt>
+<dd><p>Filter features and compute BM25 weights.</p>
+<dl class="simple">
+<dt>The BM25 score for each feature is:</dt><dd><p>tf * idf / (tf + k1 * (1 - b + b * (doc_len / avg_doc_len)))</p>
+</dd>
+</dl>
+<p>Filter the features accordingly and reweight the associated counts. The counts
+are scaled by raising them to <span class="math notranslate nohighlight">\(1/temperature\)</span> and then multiplied by the
+<code class="docutils literal notranslate"><span class="pre">idf</span></code> value.</p>
+<p>Features will be filtered out if their document frequency is not within
+[<code class="docutils literal notranslate"><span class="pre">minDF</span></code>, <code class="docutils literal notranslate"><span class="pre">maxDF</span></code>] and if a <code class="docutils literal notranslate"><span class="pre">filter</span></code> is provided during initialization.
+Only those features that pass the filters will contribute to the final vector.</p>
+<p>After filtering, a final check is done to ensure that there are at least
+<code class="docutils literal notranslate"><span class="pre">min_n_features</span></code> features remaining and that there are at least
+<code class="docutils literal notranslate"><span class="pre">min_n_observations</span></code> observations of those features. Otherwise an empty list
+is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> (<em>List</em><em>[</em><em>bytes</em><em>]</em>) – List of the individual features. These will be hashed by the FeatureHasher
+to turn into a sparse vector representation</p></li>
+<li><p><strong>counts</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – Number of times that feature is present in a given record.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[Tuple[bytes, float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pocket_dimension.vectorizer.TFIDFVectorizer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">TFIDFVectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cms_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2147483647</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4294967295</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFIDFVectorizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFIDFVectorizer" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">TFIDFVectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cms_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">CountMinLinear</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2147483647</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4294967295</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFIDFVectorizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFIDFVectorizer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pocket_dimension.vectorizer.TFVectorizer" title="pocket_dimension.vectorizer.TFVectorizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a></p>
 <p>Randomly project records by first applying a high-dimensional feature hasher
 to create a sparse vector representation of the tf-idf and then applying the
@@ -405,7 +528,7 @@ random projection to a dense embedding dimension.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pocket_dimension.vectorizer.TFVectorizer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">TFVectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">cms_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2147483647</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4294967295</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">TFVectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">cms_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">CountMinLinear</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2147483647</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4294967295</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#TFVectorizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.TFVectorizer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Calculate a Term-Frequency vector representation by first using sklearn’s
 FeatureHasher to create a high-dimensional, sparse vector representation.
@@ -417,8 +540,11 @@ length.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>d</strong> (<em>int</em>) – Dimension of the dense vector output. Rounded down to nearest multiple of 64 if
 not already</p></li>
-<li><p><strong>cms_file</strong> (<em>str</em><em> | </em><em>Path</em><em>, </em><em>optional</em>) – Filename of a saved count-min sketch to use for filtering out features
-whose document frequency falls outside of [minDF, maxDF]. Default is None</p></li>
+<li><p><strong>cms_file</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>CountMinLinear</em><em>, </em><em>optional</em>) – A path to a saved count-min sketch or an already instantiated
+<code class="docutils literal notranslate"><span class="pre">CountMinLinear</span></code> instance. <code class="docutils literal notranslate"><span class="pre">CountMinLog16</span></code> and <code class="docutils literal notranslate"><span class="pre">CountMinLog8</span></code> instances
+are also accepted because they subclass <code class="docutils literal notranslate"><span class="pre">CountMinLinear</span></code>. The sketch is used
+to estimate document frequencies for filtering features by <code class="docutils literal notranslate"><span class="pre">minDF</span></code> and
+<code class="docutils literal notranslate"><span class="pre">maxDF</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 <li><p><strong>hash_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of dimensions that features get hashed to for the sparse vector
 representation. Should have <cite>hash_dim &gt;&gt; d</cite>. Default is the largest
 possible 2**31 - 1 (~2 billion) for sklearn’s FeatureHasher</p></li>
@@ -644,6 +770,23 @@ the <cite>records</cite> passed in</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pocket_dimension.vectorizer.numba_idf_bm25">
+<span class="sig-prename descclassname"><span class="pre">pocket_dimension.vectorizer.</span></span><span class="sig-name descname"><span class="pre">numba_idf_bm25</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pocket_dimension/vectorizer.html#numba_idf_bm25"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pocket_dimension.vectorizer.numba_idf_bm25" title="Link to this definition"></a></dt>
+<dd><p>Numba function to calculate the idf value for a <code class="docutils literal notranslate"><span class="pre">doc_freq</span></code> following BM25 formula</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doc_freq</strong> (<em>float32</em>) – Number of records that contain this particular feature.</p></li>
+<li><p><strong>n_records</strong> (<em>float32</em>) – Total number of records in the data set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float32</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-tests.test_pocket_dimension">
 <span id="tests-test-pocket-dimension"></span><h1>tests.test_pocket_dimension<a class="headerlink" href="#module-tests.test_pocket_dimension" title="Link to this heading"></a></h1>
@@ -668,8 +811,28 @@ along with this program.  If not, see &lt;<a class="reference external" href="ht
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.test_pocket_dimension.test_bm25_constructor_and_parameters">
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_bm25_constructor_and_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_bm25_constructor_and_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_bm25_constructor_and_parameters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_pocket_dimension.test_bm25_document_length_normalization">
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_bm25_document_length_normalization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_bm25_document_length_normalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_bm25_document_length_normalization" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_pocket_dimension.test_bm25_vectorization">
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_bm25_vectorization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_bm25_vectorization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_bm25_vectorization" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length">
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_bm25_weights_use_temperature_and_document_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_bm25_weights_use_temperature_and_document_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss">
-<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_distributional_johnson_lindenstrauss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_pad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_distributional_johnson_lindenstrauss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_distributional_johnson_lindenstrauss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_pad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.02</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_distributional_johnson_lindenstrauss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss" title="Link to this definition"></a></dt>
 <dd><p>Test the statistical guarantees of the Distributional Johnson-Lindenstrauss Lemma
 using a method for finding the best possible delta (failure rate) for a given
 epsilon (error rate) of the difference of the L2 norm between vectors in the
@@ -677,11 +840,11 @@ original dimension (x) and the lower embedding dimension (Ax) described in</p>
 <p>M. Skorski. <em>Johnson-Lindenstrauss Transforms with Best Confidence</em>,
 Proceedings of Machine Learning Research <strong>134</strong>, 1 (2021)
 <a class="reference external" href="http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf">http://proceedings.mlr.press/v134/skorski21a/skorski21a.pdf</a></p>
-<p>This paper provides the optimal possible error probability</p>
-<dl class="simple">
-<dt>delta(sparse_dim, embed_dim, eps) =</dt><dd><p>P[abs(|Ax|**2 - |x|**2) &gt; eps * |x|**2]</p>
-</dd>
-</dl>
+<p>This paper provides the optimal possible error probability:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delta</span><span class="p">(</span><span class="n">sparse_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span> <span class="o">=</span>
+    <span class="n">P</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span>\<span class="o">|</span><span class="n">Ax</span>\<span class="o">|</span>\<span class="o">*</span>\<span class="o">*</span><span class="mi">2</span> <span class="o">-</span> \<span class="o">|</span><span class="n">x</span>\<span class="o">|</span>\<span class="o">*</span>\<span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">eps</span> <span class="o">*</span> \<span class="o">|</span><span class="n">x</span>\<span class="o">|</span>\<span class="o">*</span>\<span class="o">*</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>given the best possible matrix A and the worst possible data x.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -692,7 +855,7 @@ Proceedings of Machine Learning Research <strong>134</strong>, 1 (2021)
 <li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Error rate. Default is 0.1</p></li>
 <li><p><strong>delta_pad</strong> (<em>float</em><em>, </em><em>optional</em>) – Amount by which we pad the calculated best delta value. This is done to reduce
 the probability of failure given the vagaries of running statistical tests.
-Default is 0.01</p></li>
+Default is 0.02</p></li>
 </ul>
 </dd>
 </dl>
@@ -707,7 +870,9 @@ randomly projected dense vectors. This uses the results found in</p>
 <p>This checkes that the ratio of the distance between two vectors in the embedding
 to the distance between the original sparse vectors is between (1-eps) and (1+eps).
 The embedding dimension is determined by the requested error rate, eps.</p>
-<p>d = 24 * log(n) / (3 * eps**2 - 2 * eps ** 3)</p>
+<p>…
+d = 24 * log(n) / (3 * eps**2 - 2 * eps ** 3)
+…</p>
 <p>where n is the number of vectors.  This does the full n(n-1)/2 comparisions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -726,6 +891,11 @@ The embedding dimension is determined by the requested error rate, eps.</p>
 <span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_numba_idf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_numba_idf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_numba_idf" title="Link to this definition"></a></dt>
 <dd><p>Test that the numba function numba_idf works as expected</p>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_pocket_dimension.test_numba_idf_bm25">
+<span class="sig-prename descclassname"><span class="pre">tests.test_pocket_dimension.</span></span><span class="sig-name descname"><span class="pre">test_numba_idf_bm25</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_pocket_dimension.html#test_numba_idf_bm25"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pocket_dimension.test_numba_idf_bm25" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.test_pocket_dimension.test_tf">

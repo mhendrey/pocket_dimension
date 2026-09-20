@@ -6,22 +6,22 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pocket Dimension &mdash; Pocket Dimension 0.2.0 documentation</title>
+  <title>Pocket Dimension &mdash; Pocket Dimension 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pocket_dimension.random_projection" href="modules.html" />
-    <link rel="prev" title="Documentation" href="index.html" /> 
+    <link rel="prev" title="Quick example" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -67,7 +67,14 @@
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#pocket-dimension-vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.k1"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.k1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.b"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.b</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.avg_doc_len</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.filter_reweight_features()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.d"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.d</span></code></a></li>
@@ -87,13 +94,19 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">numba_idf_bm25()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_constructor_and_parameters"><code class="docutils literal notranslate"><span class="pre">test_bm25_constructor_and_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_document_length_normalization"><code class="docutils literal notranslate"><span class="pre">test_bm25_document_length_normalization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_vectorization"><code class="docutils literal notranslate"><span class="pre">test_bm25_vectorization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length"><code class="docutils literal notranslate"><span class="pre">test_bm25_weights_use_temperature_and_document_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">test_numba_idf_bm25()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
@@ -149,35 +162,57 @@ dimension dense vectors (~256). It does this by not storing the entire
 (2.1 billion x 256) projection matrix in memory. Instead it calculates only the columns
 it needs on the fly based upon the non-zero elements of any given sparse vector. This
 function is implemented in Numba to speed things up.</p>
-<p>Besides the random projection function, Pocket Dimension comes with two classes that
-can create either Term-Frequency or Term-Frequency, Inverse Document Frequency vectors
-into dense vectors from starting records.</p>
+<p>Besides the random projection function, Pocket Dimension includes a small family of
+vectorizers that convert record-level sparse feature counts into dense vectors:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code> for term-frequency weighting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code> for term-frequency inverse-document-frequency weighting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code> for BM25-style weighting used in ranking-heavy retrieval tasks</p></li>
+</ul>
+<p>The vectorizers all accept a count-min sketch via <code class="docutils literal notranslate"><span class="pre">cms_file</span></code>. This can be a path to a
+saved sketch on disk or an already instantiated sketch object, which is kept for backward
+compatibility and allows a shared sketch to be reused in memory.</p>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pocket_dimension.vectorizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">TFVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pocket_dimension.vectorizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">TFVectorizer</span><span class="p">,</span> <span class="n">BM25Vectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sketchnu.countmin</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountMin</span>
 
-<span class="c1"># Make some data. &quot;one&quot; and &quot;two&quot; should be similar &amp; &quot;abc&quot; should be different</span>
+<span class="c1"># Make some data. "one" and "two" should be similar &amp; "abc" should be different</span>
 <span class="n">records</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;three&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;three&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]},</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;cde&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;efghi&quot;</span><span class="p">],</span> <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"one"</span><span class="p">,</span> <span class="s2">"features"</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">"one"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"two"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"three"</span><span class="p">],</span> <span class="s2">"counts"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"two"</span><span class="p">,</span> <span class="s2">"features"</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">"one"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"two"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"three"</span><span class="p">],</span> <span class="s2">"counts"</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"abc"</span><span class="p">,</span> <span class="s2">"features"</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">"abc"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"cde"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"efghi"</span><span class="p">],</span> <span class="s2">"counts"</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
 <span class="p">]</span>
 
-<span class="c1"># Create the TFVectorizer. Let&#39;s project down to 128-d</span>
+<span class="c1"># Create the TFVectorizer. Let's project down to 128-d</span>
 <span class="n">embedder</span> <span class="o">=</span> <span class="n">TFVectorizer</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
 
-<span class="c1"># let&#39;s check cosine similarity</span>
+<span class="c1"># let's check cosine similarity</span>
 <span class="n">cosine_one_two</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">cosine_one_abc</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vectors &#39;one&#39; and &#39;two&#39; have cosine similarity = </span><span class="si">{</span><span class="n">cosine_one_two</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vectors &#39;one&#39; and &#39;abc&#39; have cosine similarity = </span><span class="si">{</span><span class="n">cosine_one_abc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="c1"># Vectors &#39;one&#39; and &#39;two&#39; have cosine similarity = 0.9926</span>
-<span class="c1"># Vectors &#39;one&#39; and &#39;abc&#39; have cosine similarity = -0.0177</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Vectors 'one' and 'two' have cosine similarity = </span><span class="si">{</span><span class="n">cosine_one_two</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Vectors 'one' and 'abc' have cosine similarity = </span><span class="si">{</span><span class="n">cosine_one_abc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Vectors 'one' and 'two' have cosine similarity = 0.9926</span>
+<span class="c1"># Vectors 'one' and 'abc' have cosine similarity = -0.0177</span>
+
+<span class="c1"># BM25 uses a count-min sketch to estimate document frequencies and corpus statistics.</span>
+<span class="n">cms</span> <span class="o">=</span> <span class="n">CountMin</span><span class="p">(</span><span class="s2">"linear"</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="s2">"features"</span><span class="p">],</span> <span class="n">rec</span><span class="p">[</span><span class="s2">"counts"</span><span class="p">]):</span>
+        <span class="n">cms</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># BM25 uses the number of documents a term appears in, not the total count</span>
+    <span class="n">cms</span><span class="o">.</span><span class="n">n_added_records</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># increment the number of 'documents' added to the sketch</span>
+
+<span class="n">bm25</span> <span class="o">=</span> <span class="n">BM25Vectorizer</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">cms_file</span><span class="o">=</span><span class="n">cms</span><span class="p">)</span>
+<span class="n">X_bm25</span><span class="p">,</span> <span class="n">ids_bm25</span> <span class="o">=</span> <span class="n">bm25</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>The BM25 vectorizer is especially useful when you want a ranking-oriented weighting that
+accounts for per-document length normalization as well as inverse document frequency.
+In API usage, <code class="docutils literal notranslate"><span class="pre">cms_file</span></code> may be provided either as a saved sketch path or as an in-memory
+<code class="docutils literal notranslate"><span class="pre">CountMinLinear</span></code> instance (or subclass such as <code class="docutils literal notranslate"><span class="pre">CountMinLog8</span></code> / <code class="docutils literal notranslate"><span class="pre">CountMinLog16</span></code>).</p>
 </section>
 <section id="the-details">
 <h2>The Details<a class="headerlink" href="#the-details" title="Link to this heading"></a></h2>
@@ -210,7 +245,7 @@ within a multiple of <span class="math notranslate nohighlight">\(1\pm\epsilon\)
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Quick example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="modules.html" class="btn btn-neutral float-right" title="pocket_dimension.random_projection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

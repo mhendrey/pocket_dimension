@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation &mdash; Pocket Dimension 0.2.0 documentation</title>
+  <title>Quick example &mdash; Pocket Dimension 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -65,7 +65,14 @@
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#pocket-dimension-vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.k1"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.k1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.b"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.b</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.avg_doc_len"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.avg_doc_len</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer.filter_reweight_features"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer.filter_reweight_features()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer.d"><code class="docutils literal notranslate"><span class="pre">TFVectorizer.d</span></code></a></li>
@@ -85,13 +92,19 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">numba_idf_bm25()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_constructor_and_parameters"><code class="docutils literal notranslate"><span class="pre">test_bm25_constructor_and_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_document_length_normalization"><code class="docutils literal notranslate"><span class="pre">test_bm25_document_length_normalization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_vectorization"><code class="docutils literal notranslate"><span class="pre">test_bm25_vectorization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length"><code class="docutils literal notranslate"><span class="pre">test_bm25_weights_use_temperature_and_document_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">test_numba_idf_bm25()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
@@ -127,7 +140,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Documentation</li>
+      <li class="breadcrumb-item active">Quick example</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -140,10 +153,38 @@
   <img alt="A small spiral galaxy inside a small glass sphere" class="align-center" src="_images/logo.png" />
 <hr class="docutils" />
 <p>Pocket Dimension provides a memory-efficient, dense, random projection of sparse vectors. This
-random projection is the used to be able to take records {“id”: str, “features”: List[bytes],
+random projection is used to take records {“id”: str, “features”: List[bytes],
 “counts”: List[int]}, convert them into sparse random vectors using scikit-learn’s FeatureHasher,
 and then project them down to lower dimensional dense vectors.</p>
+<p>Pocket Dimension includes three vectorizer classes for this workflow:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code> for term-frequency vectors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code> for term-frequency inverse-document-frequency vectors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code> for BM25-style scoring and ranking-friendly vector weights</p></li>
+</ul>
+<p>The vectorizers accept a count-min sketch via the <code class="docutils literal notranslate"><span class="pre">cms_file</span></code> argument, which may be a path to a saved sketch or an already instantiated sketch object. This keeps older code paths working while allowing in-memory reuse of a shared sketch.</p>
 <p>When the very large sparse universe becomes too inhospitable, escape into a cozy pocket dimension.</p>
+<section id="quick-example">
+<h1>Quick example<a class="headerlink" href="#quick-example" title="Link to this heading"></a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sketchnu.countmin</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountMin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pocket_dimension.vectorizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">BM25Vectorizer</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"one"</span><span class="p">,</span> <span class="s2">"features"</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">"apple"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"banana"</span><span class="p">],</span> <span class="s2">"counts"</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"two"</span><span class="p">,</span> <span class="s2">"features"</span><span class="p">:</span> <span class="p">[</span><span class="sa">b</span><span class="s2">"apple"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"cherry"</span><span class="p">],</span> <span class="s2">"counts"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="p">]</span>
+
+<span class="n">cms</span> <span class="o">=</span> <span class="n">CountMin</span><span class="p">(</span><span class="s2">"linear"</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="s2">"features"</span><span class="p">],</span> <span class="n">rec</span><span class="p">[</span><span class="s2">"counts"</span><span class="p">]):</span>
+        <span class="n">cms</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="c1"># BM25 uses the number of documents a term appears in, not the total count</span>
+    <span class="n">cms</span><span class="o">.</span><span class="n">n_added_records</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># increment the number of 'documents' added to the sketch</span>
+
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">BM25Vectorizer</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">cms_file</span><span class="o">=</span><span class="n">cms</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="documentation">
 <h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h1>
 <p>Documentation for the API and theoretical foundations of the algorithms can be
@@ -161,8 +202,10 @@ found at <a class="reference external" href="https://mhendrey.github.io/pocket_d
 <h1>Modules<a class="headerlink" href="#modules" title="Link to this heading"></a></h1>
 <section id="pocket-dimension">
 <h2>Pocket Dimension<a class="headerlink" href="#pocket-dimension" title="Link to this heading"></a></h2>
-<p>Contains the Numba implementation of the random projection function and the TFVectorizer and
-TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors into dense vectors.</p>
+<p>Contains the Numba implementation of the random projection function and the TFVectorizer,
+TFIDFVectorizer, and BM25Vectorizer classes that convert sparse term-weighted records into
+dense vectors. The vectorizers also support count-min sketch inputs via <code class="docutils literal notranslate"><span class="pre">cms_file</span></code>, either
+from disk or from an already instantiated sketch object.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pocket_dimension.html">Pocket Dimension</a><ul>
@@ -184,17 +227,24 @@ TFIDFVectorizer classes that use this to convert TF and TFIDF sparse vectors int
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.random_projection.splitmix64"><code class="docutils literal notranslate"><span class="pre">splitmix64()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-pocket_dimension.vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#pocket-dimension-vectorizer">pocket_dimension.vectorizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.BM25Vectorizer"><code class="docutils literal notranslate"><span class="pre">BM25Vectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFIDFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFIDFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.TFVectorizer"><code class="docutils literal notranslate"><span class="pre">TFVectorizer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf"><code class="docutils literal notranslate"><span class="pre">numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#pocket_dimension.vectorizer.numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">numba_idf_bm25()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html#module-tests.test_pocket_dimension">tests.test_pocket_dimension</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.sparse_distance_squared"><code class="docutils literal notranslate"><span class="pre">sparse_distance_squared()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_constructor_and_parameters"><code class="docutils literal notranslate"><span class="pre">test_bm25_constructor_and_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_document_length_normalization"><code class="docutils literal notranslate"><span class="pre">test_bm25_document_length_normalization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_vectorization"><code class="docutils literal notranslate"><span class="pre">test_bm25_vectorization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_bm25_weights_use_temperature_and_document_length"><code class="docutils literal notranslate"><span class="pre">test_bm25_weights_use_temperature_and_document_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_distributional_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_distributional_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_johnson_lindenstrauss"><code class="docutils literal notranslate"><span class="pre">test_johnson_lindenstrauss()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf"><code class="docutils literal notranslate"><span class="pre">test_numba_idf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_numba_idf_bm25"><code class="docutils literal notranslate"><span class="pre">test_numba_idf_bm25()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf"><code class="docutils literal notranslate"><span class="pre">test_tf()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_cms"><code class="docutils literal notranslate"><span class="pre">test_tf_cms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#tests.test_pocket_dimension.test_tf_data_quality"><code class="docutils literal notranslate"><span class="pre">test_tf_data_quality()</span></code></a></li>
