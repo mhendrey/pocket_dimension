@@ -644,7 +644,7 @@ class BM25Vectorizer(TFVectorizer):
 
         .. math::
 
-            idf = \log((N + 0.5) / (doc\_freq + 0.5))
+            idf = \log((N + 1.0) / (doc\_freq + 0.5))
 
         Parameters
         ----------
@@ -665,7 +665,7 @@ class BM25Vectorizer(TFVectorizer):
         Filter features and compute BM25 weights.
 
         The BM25 score for each feature is:
-            idf * tf / (tf + k1 * (1 - b + b * (doc_len / avg_doc_len)))
+            tf * idf / (tf + k1 * (1 - b + b * (doc_len / avg_doc_len)))
 
         Filter the features accordingly and reweight the associated counts. The counts
         are scaled by raising them to :math:`1/temperature` and then multiplied by the
