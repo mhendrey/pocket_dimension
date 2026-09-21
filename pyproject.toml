@@ -1,6 +1,6 @@
 [project]
 name = "pocket_dimension"
-version = "0.3.0"
+version = "0.3.1"
 description = "Memory-efficient, dense, random projection of sparse vectors."
 readme = "README.rst"
 authors = [{name = "Matthew Hendrey", email = "matthew.hendrey@gmail.com"}]
