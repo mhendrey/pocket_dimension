@@ -59,7 +59,7 @@ def splitmix64(index):
 def random_projection(
     data: np.ndarray, indices: np.ndarray, indptr: np.ndarray, d: int
 ):
-    """
+    r"""
     Randomly project a sparse matrix (standard CSR representation) to a dense vectors
     by effectively multiplying by a random matrix whose elements are
     :math:`\pm 1 / \sqrt{d}`. The projection matrix is never stored in memory. Instead
@@ -123,7 +123,7 @@ def random_projection(
 def distributional_johnson_lindenstrauss_optimal_delta(
     sparse_dim: int, n_components: int, eps: float
 ) -> float:
-    """
+    r"""
     Algorithm to find the optimal failure rate, delta, for a given ``eps`` (error rate),
     ``sparse_dim``, and ``n_components`` (embedding dimension) for the Distributional
     Johnson-Lindenstrauss Lemma which is a different formulation of the problem.
@@ -186,7 +186,7 @@ def random_sparse_vectors(
     normalize: bool = False,
     rng: np.random.Generator = None,
 ) -> csr_matrix:
-    """
+    r"""
     Randomly generate sparse vectors for testing
 
     Parameters
@@ -239,7 +239,7 @@ def random_sparse_vectors(
 
 
 class JustInTimeRandomProjection(BaseRandomProjection):
-    """
+    r"""
     Reduce the dimensionality of sparse vectors using a dense random projection matrix
     in a memory-efficient way.
 
