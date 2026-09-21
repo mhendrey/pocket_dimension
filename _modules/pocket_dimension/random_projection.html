@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.3.0 documentation</title>
+  <title>pocket_dimension.random_projection &mdash; Pocket Dimension 0.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=e259d695"></script>
+      <script src="../../_static/documentation_options.js?v=4621528c"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -215,7 +215,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">random_projection</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">indptr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Randomly project a sparse matrix (standard CSR representation) to a dense vectors</span>
 <span class="sd">    by effectively multiplying by a random matrix whose elements are</span>
 <span class="sd">    :math:`\pm 1 / \sqrt{d}`. The projection matrix is never stored in memory. Instead</span>
@@ -282,7 +282,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">distributional_johnson_lindenstrauss_optimal_delta</span><span class="p">(</span>
     <span class="n">sparse_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Algorithm to find the optimal failure rate, delta, for a given ``eps`` (error rate),</span>
 <span class="sd">    ``sparse_dim``, and ``n_components`` (embedding dimension) for the Distributional</span>
 <span class="sd">    Johnson-Lindenstrauss Lemma which is a different formulation of the problem.</span>
@@ -348,7 +348,7 @@
     <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">csr_matrix</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Randomly generate sparse vectors for testing</span>
 
 <span class="sd">    Parameters</span>
@@ -404,7 +404,7 @@
 <div class="viewcode-block" id="JustInTimeRandomProjection">
 <a class="viewcode-back" href="../../modules.html#pocket_dimension.random_projection.JustInTimeRandomProjection">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">JustInTimeRandomProjection</span><span class="p">(</span><span class="n">BaseRandomProjection</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Reduce the dimensionality of sparse vectors using a dense random projection matrix</span>
 <span class="sd">    in a memory-efficient way.</span>
 
